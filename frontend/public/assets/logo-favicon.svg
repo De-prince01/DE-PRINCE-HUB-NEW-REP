@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DE-PRINCE DIGITAL HUB">
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="#0B0B0B" stroke="#D4A84B" stroke-width="2"/>
+  <text x="32" y="34" text-anchor="middle" dominant-baseline="central"
+        font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="bold"
+        fill="#D4A84B">DP</text>
+  <text x="32" y="52" text-anchor="middle" dominant-baseline="central"
+        font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="bold"
+        letter-spacing="1" fill="#F0D382">DIGITAL HUB</text>
+</svg>

@@ -1,0 +1,86 @@
+# DE-PRINCE DIGITAL HUB - Render Blueprint (one-click infra)
+#
+# Creates:  1 PostgreSQL database + backend API (Docker) + frontend (Next.js)
+#
+# Usage:
+#   1. Push this repo to GitHub.
+#   2. In Render -> New -> Blueprint, select the repo. Render provisions all
+#      three resources from this file and starts a deployment.
+#   3. Set a REAL SECRET_KEY? No — generateValue:true creates fresh ones.
+#
+# Hostnames: if the names below are taken Render appends a random suffix, so
+# after deploy open each service's "Info" tab and note the exact URLs, then set
+# ALLOWED_HOSTS / CORS_ORIGINS / NEXT_PUBLIC_API_URL / NEXT_PUBLIC_SITE_URL
+# to those values (wildcards below work for testing).
+#
+# Free tier notes: services sleep after ~15 min idle; first request wakes them
+# (can take ~60 s). Postgres added to free tier does not auto-expire.
+
+databases:
+  - name: deprince-db
+    plan: free
+    databaseName: deprince
+    user: deprince
+
+services:
+  # ---------------------------------------------------------------- backend
+  - type: web
+    name: deprince-api
+    runtime: docker
+    plan: free
+    dockerContext: .
+    dockerfilePath: ./backend/Dockerfile
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: "1"
+      # Single pooled URL; start.sh derives the asyncpg URL from this.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: deprince-db
+          property: connectionString
+      - key: DATABASE_URL_SYNC
+        fromDatabase:
+          name: deprince-db
+          property: connectionString
+      # Testing defaults. REPLACE "onrender.com" entries with your exact URLs
+      # before going live.
+      - key: ALLOWED_HOSTS
+        value: '["*.onrender.com"]'
+      - key: CORS_ORIGINS
+        value: '["https://*-web.onrender.com"]'
+      # Payment / identity / SMTP stay blank => app uses the safe MOCK provider.
+      # - key: PAYSTACK_SECRET_KEY
+      #   sync: false
+      # - key: SMTP_HOST
+      #   sync: false
+      # - key: SMTP_USER
+      #   sync: false
+      # - key: SMTP_PASSWORD
+      #   sync: false
+
+  # --------------------------------------------------------------- frontend
+  - type: web
+    name: deprince-web
+    runtime: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Public frontend origin (sitemap/robots/metadata).
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://deprince-web.onrender.com
+      # Backend origin the browser calls. Must match your deployed API URL.
+      - key: NEXT_PUBLIC_API_URL
+        value: https://deprince-api.onrender.com/api/v1
