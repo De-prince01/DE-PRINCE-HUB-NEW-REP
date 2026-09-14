@@ -73,7 +73,7 @@ def upgrade() -> None:
         "account_name": sa.Column("account_name", sa.String(255)),
         "account_verified": sa.Column("account_verified", sa.Boolean, server_default=sa.false()),
     }
-    existing = {row["name"] for row in bind.get_columns("wallets")}
+    existing = {row["name"] for row in sa.inspect(bind).get_columns("wallets")}
     for name, col in cols.items():
         if name in existing:
             continue
