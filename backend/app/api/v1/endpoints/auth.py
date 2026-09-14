@@ -14,6 +14,7 @@ from app.core.security import (
 from app.api.deps import get_current_user
 from app.models.user import User
 from app.models.profile import CustomerProfile
+from app.models.enums import UserRole
 from app.models.finance import Wallet
 from app.schemas.auth import UserCreate, UserOut, LoginRequest, TokenOut, RefreshRequest
 from app.services.audit import log_action
@@ -33,7 +34,7 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
         password_hash=hash_password(data.password),
         first_name=data.first_name,
         last_name=data.last_name,
-        role="customer",
+        role=UserRole.CUSTOMER,
     )
     db.add(user)
     try:
