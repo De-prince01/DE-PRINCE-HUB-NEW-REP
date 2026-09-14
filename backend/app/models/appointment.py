@@ -35,7 +35,7 @@ class Appointment(Base):
     duration_minutes = Column(Integer, default=30, nullable=False)
 
     status = Column(
-        SAEnum(AppointmentStatus, name="appointment_status"),
+        SAEnum(AppointmentStatus, name="appointment_status", values_callable=lambda c: [e.value for e in c]),
         default=AppointmentStatus.REQUESTED,
         nullable=False,
     )

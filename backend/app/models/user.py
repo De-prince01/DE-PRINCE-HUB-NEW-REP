@@ -21,7 +21,7 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
-    role = Column(SAEnum(UserRole, name="user_role"), default="customer", nullable=False)
+    role = Column(SAEnum(UserRole, name="user_role", values_callable=lambda c: [e.value for e in c]), default="customer", nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
     is_verified = Column(Boolean, default=False, nullable=False)
     avatar_url = Column(String(500))

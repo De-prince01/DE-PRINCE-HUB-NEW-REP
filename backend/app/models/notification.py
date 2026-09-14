@@ -51,7 +51,7 @@ class Receipt(Base):
     subtotal = Column(Float, nullable=False)
     tax = Column(Float, default=0)
     total = Column(Float, nullable=False)
-    payment_method = Column(SAEnum(PaymentMethod, name="payment_method"))
+    payment_method = Column(SAEnum(PaymentMethod, name="payment_method", values_callable=lambda c: [e.value for e in c]))
     qr_data = Column(Text)
     issued_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
 

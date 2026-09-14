@@ -16,6 +16,7 @@ from app.models.service import ServiceCategory, Service
 from app.models.cybercafe import Computer, Branch
 from app.models.notification import Setting
 from app.services.banks import seed_banks
+from app.models.enums import UserRole
 
 
 def hash_password(password: str) -> str:
@@ -32,7 +33,7 @@ async def seed():
                 first_name="De-Prince",
                 last_name="Admin",
                 password_hash=hash_password("admin123"),
-                role="super_admin",
+                role=UserRole.SUPER_ADMIN,
                 is_verified=True,
             )
             db.add(admin)

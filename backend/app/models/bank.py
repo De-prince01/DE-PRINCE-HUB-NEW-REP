@@ -41,7 +41,7 @@ class WithdrawalRequest(Base):
     bank_code = Column(String(10), nullable=False)
     account_number = Column(String(20), nullable=False)
     account_name = Column(String(255))
-    status = Column(SAEnum(WithdrawalStatus, name="withdrawal_status"), default=WithdrawalStatus.PENDING, nullable=False)
+    status = Column(SAEnum(WithdrawalStatus, name="withdrawal_status", values_callable=lambda c: [e.value for e in c]), default=WithdrawalStatus.PENDING, nullable=False)
     gateway = Column(String(50))
     transfer_reference = Column(String(200))
     admin_note = Column(Text)

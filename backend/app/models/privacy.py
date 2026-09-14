@@ -46,8 +46,8 @@ class PrivacyRequest(Base):
     id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     request_number = Column(String(50), unique=True, nullable=False)
     user_id = Column(Uuid(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    request_type = Column(SAEnum(PrivacyRequestType, name="privacy_request_type"), nullable=False)
-    status = Column(SAEnum(PrivacyRequestStatus, name="privacy_request_status"),
+    request_type = Column(SAEnum(PrivacyRequestType, name="privacy_request_type", values_callable=lambda c: [e.value for e in c]), nullable=False)
+    status = Column(SAEnum(PrivacyRequestStatus, name="privacy_request_status", values_callable=lambda c: [e.value for e in c]),
                     default="pending", nullable=False)
     reason = Column(Text)
     processed_by = Column(Uuid(as_uuid=True), ForeignKey("users.id"))
