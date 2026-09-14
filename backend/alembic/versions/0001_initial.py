@@ -30,20 +30,14 @@ def upgrade() -> None:
         raise RuntimeError("001_init.sql not found — cannot run initial migration")
     if sql_path.exists():
         sql = sql_path.read_text()
-        # Split on statement boundaries is fragile; instead execute whole file.
-        # pg works with multiple statements in one execute (via psycopg tendency),
-        # but SQLAlchemy's execute may not. Fall back to raw connection if needed.
+        # Use psycopg2 cursor directly: it handles multi-statement SQL natively
+        # (simple query protocol). SQLAlchemy text() can only execute a single
+        # statement, and failed executes poison the transaction permanently.
         conn = op.get_bind()
-        try:
-            conn.execute(sa.text(sql))
-        except Exception:
-            # Execute statement by statement (naive split on ';' respecting strings is hard)
-            stmts = [s.strip() for s in sql.split(";") if s.strip()]
-            for stmt in stmts:
-                try:
-                    conn.execute(sa.text(stmt))
-                except Exception:
-                    pass
+        raw = conn.connection  # psycopg2 connection (DBAPI)
+        cur = raw.cursor()
+        cur.execute(sql)
+        cur.close()
 
 
 def downgrade() -> None:
