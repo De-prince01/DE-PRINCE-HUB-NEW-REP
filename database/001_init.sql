@@ -308,6 +308,17 @@ CREATE TABLE wallets (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE wallet_transactions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  wallet_id UUID NOT NULL REFERENCES wallets(id),
+  type VARCHAR(50) NOT NULL,
+  amount NUMERIC(12,2) NOT NULL,
+  reference VARCHAR(100) UNIQUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_wallet_tx_wallet ON wallet_transactions(wallet_id);
+
 -- ============================================================
 -- TRANSACTIONS
 -- ============================================================
@@ -419,6 +430,8 @@ CREATE TABLE print_jobs (
   binding_type VARCHAR(30),
   lamination BOOLEAN DEFAULT false,
   status VARCHAR(30) DEFAULT 'pending',
+  total_amount NUMERIC(12,2) NOT NULL DEFAULT 0,
+  is_paid BOOLEAN NOT NULL DEFAULT false,
   notes TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   completed_at TIMESTAMPTZ
