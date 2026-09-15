@@ -77,3 +77,27 @@
     height: 40px;
   }
 }
+
+.service-card {
+  @apply relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+}
+
+.service-card-header {
+  @apply flex items-center justify-center h-28;
+}
+
+.service-card-icon {
+  @apply flex items-center justify-center w-14 h-14 rounded-full bg-white/90 shadow-sm;
+}
+
+.service-card-body {
+  @apply p-4 space-y-2;
+}
+
+.service-card-title {
+  @apply font-semibold text-sm leading-tight;
+}
+
+.service-card-desc {
+  @apply text-xs text-muted-foreground line-clamp-2;
+}
