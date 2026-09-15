@@ -53,6 +53,7 @@ import {
   Code,
   Settings,
   Monitor,
+  type LucideIcon,
 } from "lucide-react";
 import type { ServiceCategory, Service, Order } from "@/types";
 
