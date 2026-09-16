@@ -57,6 +57,8 @@ async def seed():
         # ── Ensure verification tables exist (idempotent DDL) ────────────
         # This is needed because we cannot run alembic against Render's
         # database directly; the migration file exists for documentation.
+        # NOTE: each statement is executed separately — asyncpg rejects
+        # multiple commands inside a single execute() call.
         await db.execute(text("""
             CREATE TABLE IF NOT EXISTS verification_requests (
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -80,10 +82,17 @@ async def seed():
                 completed_at TIMESTAMPTZ,
                 updated_at TIMESTAMPTZ DEFAULT NOW(),
                 expires_at TIMESTAMPTZ
-            );
-            CREATE INDEX IF NOT EXISTS ix_verification_requests_reference ON verification_requests(reference);
-            CREATE INDEX IF NOT EXISTS ix_verification_requests_customer_id ON verification_requests(customer_id);
-
+            )
+        """))
+        await db.execute(text(
+            "CREATE INDEX IF NOT EXISTS ix_verification_requests_reference "
+            "ON verification_requests(reference)"
+        ))
+        await db.execute(text(
+            "CREATE INDEX IF NOT EXISTS ix_verification_requests_customer_id "
+            "ON verification_requests(customer_id)"
+        ))
+        await db.execute(text("""
             CREATE TABLE IF NOT EXISTS verification_providers (
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 name VARCHAR(100) UNIQUE NOT NULL,
@@ -97,7 +106,7 @@ async def seed():
                 notes TEXT,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                 updated_at TIMESTAMPTZ DEFAULT NOW()
-            );
+            )
         """))
         await db.flush()
 
