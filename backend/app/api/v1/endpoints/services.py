@@ -74,8 +74,19 @@ async def get_category(category_slug: str, db: AsyncSession = Depends(get_db)):
     services = await db.execute(
         select(Service).where(Service.category_id == category.id, Service.is_active == True)
     )
-    category.services = services.scalars().all()
-    return category
+    # Build the response explicitly — assigning category.services would trigger
+    # lazy back-populate loads (MissingGreenlet in async sessions).
+    return ServiceCategoryDetail(
+        id=category.id,
+        name=category.name,
+        slug=category.slug,
+        description=category.description,
+        icon=category.icon,
+        display_order=category.display_order,
+        is_active=category.is_active,
+        revenue_stream=category.revenue_stream,
+        services=list(services.scalars().all()),
+    )
 
 
 @router.get("", response_model=List[ServiceOut])
