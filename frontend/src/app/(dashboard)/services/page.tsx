@@ -312,7 +312,6 @@ export default function ServicesPage() {
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {catServices.map((service) => {
-                  const Icon = getServiceIcon(service.name);
                   return (
                     <Link
                       key={service.id}
@@ -323,7 +322,11 @@ export default function ServicesPage() {
                           className={`service-card-header bg-gradient-to-br ${colors.bg}`}
                         >
                           <div className="service-card-icon">
-                            <Icon className="h-6 w-6 text-gray-700" />
+                            <img
+                              src="/images/service-default-icon.png"
+                              alt={service.name}
+                              className="h-10 w-10 object-contain rounded-full"
+                            />
                           </div>
                         </div>
                         <div className="service-card-body">
