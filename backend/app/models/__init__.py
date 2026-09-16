@@ -19,6 +19,7 @@ from app.models.referral import ReferralProgram, ReferralCode, ReferralSignup, R
 from app.models.support import SupportTicket, SupportMessage, FAQ
 from app.models.privacy import DataPurpose, DataConsent, PrivacyRequest, DataAccessAudit
 from app.models.bank import Bank, WithdrawalRequest
+from app.models.verification import VerificationRequest, VerificationProviderConfig
 
 __all__ = [
     "User",
@@ -73,4 +74,6 @@ __all__ = [
     "DataAccessAudit",
     "Bank",
     "WithdrawalRequest",
+    "VerificationRequest",
+    "VerificationProviderConfig",
 ]

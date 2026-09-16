@@ -23,6 +23,7 @@ const categories = [
   { icon: Code, title: "Web Development", desc: "Websites, web apps and APIs.", href: "/services?cat=web-development" },
   { icon: Monitor, title: "Computer Services", desc: "Installation, troubleshooting and support.", href: "/services?cat=computer-services" },
   { icon: Globe, title: "Online Services", desc: "Authorized registrations and applications.", href: "/services?cat=online-services" },
+  { icon: Shield, title: "Government & Identity", desc: "NIN, BVN, CAC and official document processing.", href: "/services?cat=government-services" },
 ];
 
 const steps = [
@@ -34,8 +35,8 @@ const steps = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
-      <header className="border-b">
+    <div className="min-h-screen bg-[#0B0B0B] text-white">
+      <header className="border-b border-[#D4A84B]/20">
         <div className="container flex items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <a href="/" className="brand">
@@ -49,15 +50,15 @@ export default function HomePage() {
             <span className="text-lg font-bold">De-Prince Digital Hub</span>
           </div>
           <nav className="hidden items-center gap-6 md:flex">
-            <Link href="/services" className="text-sm text-muted-foreground hover:text-foreground">Services</Link>
-            <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About</Link>
-            <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</Link>
+            <Link href="/services" className="text-sm text-[#A8A8A8] hover:text-white">Services</Link>
+            <Link href="/about" className="text-sm text-[#A8A8A8] hover:text-white">About</Link>
+            <Link href="/contact" className="text-sm text-[#A8A8A8] hover:text-white">Contact</Link>
           </nav>
           <div className="flex items-center gap-2">
             <Link href="/login">
-              <span className="text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-2">Sign In</span>
+              <span className="text-sm font-medium text-[#A8A8A8] hover:text-white px-3 py-2">Sign In</span>
             </Link>
-            <Link href="/register" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+            <Link href="/register" className="rounded-md bg-gradient-to-r from-[#E8C879] via-[#D4A84B] to-[#B8860B] px-4 py-2 text-sm font-semibold text-[#0B0B0B] hover:brightness-110">
               Get Started
             </Link>
           </div>
@@ -69,18 +70,18 @@ export default function HomePage() {
           <div className="container mx-auto max-w-3xl px-4">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
               Everything Digital.{" "}
-              <span className="text-primary">One Platform.</span>
+              <span className="text-[#E8C879]">One Platform.</span>
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-[#A8A8A8]">
               Print, design, develop, type, format and much more — all from your
               phone or computer. Order online, track progress, and get your work
               delivered digitally or physically.
             </p>
             <div className="mt-8 flex flex-col gap-3 justify-center sm:flex-row">
-              <Link href="/register" className="rounded-md bg-primary px-6 py-3 text-white font-medium hover:bg-primary/90">
+              <Link href="/register" className="rounded-md bg-gradient-to-r from-[#E8C879] via-[#D4A84B] to-[#B8860B] px-6 py-3 text-[#0B0B0B] font-semibold hover:brightness-110">
                 Start an Order
               </Link>
-              <Link href="/services" className="rounded-md border bg-background px-6 py-3 text-foreground font-medium hover:bg-muted">
+              <Link href="/services" className="rounded-md border border-[#D4A84B]/40 bg-transparent px-6 py-3 text-white font-medium hover:bg-[#D4A84B]/10">
                 Browse Services
               </Link>
             </div>
@@ -89,33 +90,33 @@ export default function HomePage() {
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-center text-2xl font-bold">Our Services</h2>
-            <p className="mt-2 text-center text-muted-foreground">
+            <h2 className="text-center text-2xl font-bold text-white">Our Services</h2>
+            <p className="mt-2 text-center text-[#A8A8A8]">
               A complete digital-service marketplace
             </p>
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {categories.map((cat) => (
-                <Link key={cat.title} href={cat.href} className="group rounded-xl border p-6 transition hover:border-primary/50 hover:shadow-md">
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <cat.icon className="h-5 w-5 text-primary" />
+                <Link key={cat.title} href={cat.href} className="group rounded-xl border border-[#D4A84B]/25 bg-[#181818] p-6 transition hover:border-[#D4A84B]/60 hover:shadow-[0_0_25px_rgba(212,168,75,0.18)]">
+                  <div className="h-10 w-10 rounded-lg bg-[#D4A84B]/15 flex items-center justify-center">
+                    <cat.icon className="h-5 w-5 text-[#E8C879]" />
                   </div>
-                  <h3 className="mt-4 font-semibold">{cat.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{cat.desc}</p>
+                  <h3 className="mt-4 font-semibold text-white">{cat.title}</h3>
+                  <p className="mt-1 text-sm text-[#A8A8A8]">{cat.desc}</p>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-muted/50 py-16">
+        <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-center text-2xl font-bold">How It Works</h2>
+            <h2 className="text-center text-2xl font-bold text-white">How It Works</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {steps.map((step) => (
-                <div key={step.n} className="rounded-xl border bg-background p-6">
-                  <span className="text-3xl font-bold text-primary/30">{step.n}</span>
-                  <h3 className="mt-3 font-semibold">{step.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{step.desc}</p>
+                <div key={step.n} className="rounded-xl border border-[#D4A84B]/25 bg-[#181818] p-6">
+                  <span className="text-3xl font-bold text-[#E8C879]/30">{step.n}</span>
+                  <h3 className="mt-3 font-semibold text-white">{step.title}</h3>
+                  <p className="mt-1 text-sm text-[#A8A8A8]">{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -123,9 +124,9 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="border-t py-8">
+      <footer className="border-t border-[#D4A84B]/20 py-8">
         <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 sm:flex-row">
-          <p className="flex items-center gap-2 text-sm">
+          <p className="flex items-center gap-2 text-sm text-white">
             <img
               src="/assets/logo-mark.svg"
               alt=""
@@ -135,7 +136,7 @@ export default function HomePage() {
             />
             De-Prince Digital Hub
           </p>
-          <p className="text-sm text-muted-foreground">Everything Digital. One Platform.</p>
+          <p className="text-sm text-[#A8A8A8]">Everything Digital. One Platform.</p>
         </div>
       </footer>
       <script
@@ -159,6 +160,8 @@ export default function HomePage() {
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "JAMB/UTME Registration" } },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "NYSC Registration" } },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "CAC Business Registration" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "NIN Registration" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "BVN Registration" } },
               ],
             },
           }),

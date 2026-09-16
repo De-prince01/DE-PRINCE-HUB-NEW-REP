@@ -6,6 +6,7 @@ from app.api.v1.endpoints import (
     health, printing, inventory, pos, workers, finance, receipts, identity,
     appointments, delivery, quotations, subscriptions, referrals, support, analytics,
     privacy, business, owner, banking, admin_banking,
+    verifications,
 )
 
 api_router = APIRouter()
@@ -35,4 +36,5 @@ api_router.include_router(business.router)
 api_router.include_router(owner.router)
 api_router.include_router(banking.router)
 api_router.include_router(admin_banking.router)
+api_router.include_router(verifications.router)
 api_router.include_router(health.router)

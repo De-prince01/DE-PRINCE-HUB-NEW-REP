@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 262.1 83.3% 57.8%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 262.1 83.3% 57.8%;
+    --background: 0 0% 4%;            /* #0B0B0B deep dark */
+    --foreground: 0 0% 98%;           /* #FFFFFF white */
+    --card: 0 0% 9%;                  /* #181818 card */
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 42 61% 56%;            /* #D4A84B gold */
+    --primary-foreground: 0 0% 7%;    /* dark text on gold */
+    --secondary: 0 0% 13%;            /* #222222 */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 66%;     /* #A8A8A8 */
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;         /* #EF4444 */
+    --destructive-foreground: 0 0% 98%;
+    --border: 42 61% 56% / 0.28;      /* thin gold border */
+    --input: 42 61% 56% / 0.35;
+    --ring: 42 61% 56%;
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 263.4 70% 50.4%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 263.4 70% 50.4%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 42 61% 56%;
+    --primary-foreground: 0 0% 7%;
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 66%;
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 42 61% 56% / 0.28;
+    --input: 42 61% 56% / 0.35;
+    --ring: 42 61% 56%;
   }
 }
 
@@ -53,8 +53,11 @@
   * {
     @apply border-border;
   }
+  html {
+    @apply bg-[#0B0B0B];
+  }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-[#111111] text-foreground antialiased;
   }
 }
 
@@ -78,8 +81,20 @@
   }
 }
 
+.btn-gold {
+  @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#E8C879] via-[#D4A84B] to-[#B8860B] px-5 py-2.5 text-sm font-semibold text-[#0B0B0B] shadow-[0_0_20px_rgba(212,168,75,0.35)] transition-all hover:shadow-[0_0_30px_rgba(212,168,75,0.55)] hover:brightness-110 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50;
+}
+
+.gold-border {
+  @apply border border-[#D4A84B]/30;
+}
+
+.card-premium {
+  @apply rounded-xl border border-[#D4A84B]/25 bg-[#181818] shadow-[0_0_18px_rgba(0,0,0,0.45)] transition-all duration-200 hover:border-[#D4A84B]/60 hover:shadow-[0_0_25px_rgba(212,168,75,0.18)];
+}
+
 .service-card {
-  @apply relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  @apply relative overflow-hidden rounded-xl border border-[#D4A84B]/25 bg-[#181818] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D4A84B]/60 hover:shadow-[0_0_25px_rgba(212,168,75,0.2)];
 }
 
 .service-card-header {
@@ -95,9 +110,9 @@
 }
 
 .service-card-title {
-  @apply font-semibold text-sm leading-tight;
+  @apply font-semibold text-sm leading-tight text-white;
 }
 
 .service-card-desc {
-  @apply text-xs text-muted-foreground line-clamp-2;
+  @apply text-xs text-[#A8A8A8] line-clamp-2;
 }

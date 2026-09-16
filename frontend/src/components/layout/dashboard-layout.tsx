@@ -47,6 +47,7 @@ interface NavItem {
 const customerNav: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/services", label: "Services", icon: ShoppingBag },
+  { href: "/verifications", label: "Verifications", icon: ShieldCheck },
   { href: "/appointments", label: "Appointments", icon: CalendarClock },
   { href: "/quotations", label: "Quotations", icon: FileText },
   { href: "/subscriptions", label: "Subscriptions", icon: Repeat },
@@ -112,11 +113,11 @@ export default function DashboardLayout({
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 transform border-r bg-background transition-transform lg:translate-x-0 lg:static",
+          "fixed inset-y-0 left-0 z-50 w-64 transform border-r bg-[#111111] transition-transform lg:translate-x-0 lg:static",
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex items-center justify-between border-b px-4 py-4">
+        <div className="flex items-center justify-between border-b border-[#D4A84B]/20 px-4 py-4">
           <Link href="/dashboard" className="flex items-center gap-2">
             <img
               src="/assets/logo-mark.svg"
@@ -125,7 +126,7 @@ export default function DashboardLayout({
               height="32"
               className="h-8 w-8"
             />
-            <span className="font-semibold">De-Prince Hub</span>
+            <span className="font-semibold text-white">De-Prince Hub</span>
           </Link>
           <button className="lg:hidden" onClick={() => setMobileOpen(false)}>
             <X className="h-5 w-5" />
@@ -142,7 +143,9 @@ export default function DashboardLayout({
                 onClick={() => setMobileOpen(false)}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
-                  active ? "bg-primary/10 text-primary font-medium" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  active
+                    ? "bg-[#D4A84B]/15 text-[#E8C879] font-medium border-l-2 border-[#D4A84B]"
+                    : "text-[#A8A8A8] hover:bg-[#222] hover:text-white"
                 )}
               >
                 <item.icon className="h-4 w-4" />
@@ -152,30 +155,30 @@ export default function DashboardLayout({
           })}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 border-t p-3">
-          <Button variant="ghost" className="w-full justify-start text-red-600" onClick={handleLogout}>
+        <div className="absolute bottom-0 left-0 right-0 border-t border-[#D4A84B]/20 p-3">
+          <Button variant="ghost" className="w-full justify-start text-red-400 hover:text-red-300" onClick={handleLogout}>
             <LogOut className="h-4 w-4" /> Sign Out
           </Button>
         </div>
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="sticky top-0 z-30 flex items-center justify-between border-b bg-background px-4 py-3 lg:px-6">
+        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-[#D4A84B]/20 bg-[#111111]/95 backdrop-blur px-4 py-3 lg:px-6">
           <button className="lg:hidden" onClick={() => setMobileOpen(true)}>
             <Menu className="h-5 w-5" />
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-3">
-            <Link href="/notifications" className="relative p-2 hover:bg-muted rounded-full">
+            <Link href="/notifications" className="relative p-2 rounded-full hover:bg-[#222]">
               <Bell className="h-5 w-5" />
             </Link>
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-medium">
+              <p className="text-sm font-medium text-white">
                 {user?.first_name} {user?.last_name}
               </p>
-              <p className="text-xs text-muted-foreground capitalize">{user?.role.replace("_", " ")}</p>
+              <p className="text-xs text-[#A8A8A8] capitalize">{user?.role.replace("_", " ")}</p>
             </div>
-            <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-semibold">
+            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-[#E8C879] to-[#B8860B] flex items-center justify-center text-[#0B0B0B] text-sm font-bold">
               {user?.first_name?.charAt(0)}
             </div>
           </div>

@@ -52,8 +52,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-primary/10 p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_top,rgba(212,168,75,0.15),transparent_60%),#0B0B0B] p-4">
+      <Card className="w-full max-w-md border-[#D4A84B]/30 bg-[#151515] shadow-[0_0_40px_rgba(212,168,75,0.12)]">
         <CardHeader className="text-center space-y-2">
           <div className="flex justify-center">
             <img
@@ -64,36 +64,36 @@ export default function RegisterPage() {
               className="h-14 w-14"
             />
           </div>
-          <CardTitle className="text-2xl">Create Account</CardTitle>
-          <CardDescription>Join De-Prince Digital Hub</CardDescription>
+          <CardTitle className="text-2xl text-white">Create Account</CardTitle>
+          <CardDescription className="text-[#A8A8A8]">Join De-Prince Digital Hub</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="first_name">First Name</Label>
+                <Label htmlFor="first_name" className="text-[#E8E8E8]">First Name</Label>
                 <Input id="first_name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="last_name">Last Name</Label>
+                <Label htmlFor="last_name" className="text-[#E8E8E8]">Last Name</Label>
                 <Input id="last_name" value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} required />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-[#E8E8E8]">Email</Label>
               <Input id="email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone (optional)</Label>
+              <Label htmlFor="phone" className="text-[#E8E8E8]">Phone (optional)</Label>
               <Input id="phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="08012345678" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-[#E8E8E8]">Password</Label>
                 <Input id="password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirm">Confirm</Label>
+                <Label htmlFor="confirm" className="text-[#E8E8E8]">Confirm</Label>
                 <Input id="confirm" type="password" value={form.confirm} onChange={(e) => setForm({ ...form, confirm: e.target.value })} required />
               </div>
             </div>
@@ -101,9 +101,9 @@ export default function RegisterPage() {
               {loading ? "Creating account..." : "Create Account"}
             </Button>
           </form>
-          <div className="mt-4 text-center text-sm text-muted-foreground">
+          <div className="mt-4 text-center text-sm text-[#A8A8A8]">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline">
+            <Link href="/login" className="text-[#E8C879] hover:underline">
               Sign in
             </Link>
           </div>

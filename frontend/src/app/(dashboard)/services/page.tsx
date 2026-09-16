@@ -53,6 +53,14 @@ import {
   Code,
   Settings,
   Monitor,
+  UserRound,
+  FilePenLine,
+  FileSearch,
+  Fingerprint,
+  Vote,
+  Stamp,
+  Plane,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 import type { ServiceCategory, Service, Order } from "@/types";
@@ -64,6 +72,8 @@ const CATEGORY_COLORS: Record<string, { bg: string; icon: string }> = {
   web:        { bg: "from-[#16a34a] to-[#15803d]", icon: "text-green-800" },
   computer:   { bg: "from-[#ea580c] to-[#c2410c]", icon: "text-orange-800" },
   online:     { bg: "from-[#0d9488] to-[#0f766e]", icon: "text-teal-800" },
+  jamb:       { bg: "from-[#b91c1c] to-[#991b1b]", icon: "text-red-800" },
+  government: { bg: "from-[#d4a84b] to-[#b8860b]", icon: "text-amber-800" },
   fallback:   { bg: "from-[#d4a84b] to-[#a87c1e]", icon: "text-amber-800" },
 };
 
@@ -74,6 +84,8 @@ const CATEGORY_MAP: Record<string, string> = {
   "web development": "web",
   "computer services": "computer",
   "online services": "online",
+  "jamb services": "jamb",
+  "government & identity": "government",
 };
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
@@ -111,6 +123,22 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
   "Project Typing":                  PenLine,
   "Table of Contents":               List,
   "PowerPoint Presentation":         FileText,
+  "JAMB/UTME Registration":          GraduationCap,
+  "JAMB Profile Creation":           UserRound,
+  "JAMB ePIN & Document Printing":   Printer,
+  "JAMB Correction of Data":         FilePenLine,
+  "JAMB CBT Practice":               Cpu,
+  "Post-UTME Registration":          GraduationCap,
+  "NIN (National ID) Registration":  Fingerprint,
+  "NIN Retrieval / Print":           FileSearch,
+  "BVN (Bank Verification Number)":  Fingerprint,
+  "CAC Business Registration":       Building2,
+  "CAC Business Search":             Search,
+  "Voter Registration Booking":      Vote,
+  "Verification Centre":             ShieldCheck,
+  "NYSC Registration Assistance":    GraduationCap,
+  "Document Attestation":            Stamp,
+  "Passport Booking Assistance":     Plane,
 };
 
 function getServiceIcon(name: string) {
@@ -235,8 +263,8 @@ export default function ServicesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Services</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl font-bold text-white">Services</h1>
+        <p className="text-[#A8A8A8]">
           Choose a service to get started
         </p>
       </div>
@@ -246,8 +274,8 @@ export default function ServicesPage() {
           onClick={() => setActiveCategory(null)}
           className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
             !activeCategory
-              ? "bg-[#d4a84b] text-white shadow-sm"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+              ? "bg-gradient-to-r from-[#E8C879] to-[#B8860B] text-[#0B0B0B] shadow-sm"
+              : "bg-[#222] text-[#A8A8A8] hover:bg-[#333]"
           }`}
         >
           All
@@ -258,8 +286,8 @@ export default function ServicesPage() {
             onClick={() => setActiveCategory(cat.id)}
             className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
               activeCategory === cat.id
-                ? "bg-[#d4a84b] text-white shadow-sm"
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
+                ? "bg-gradient-to-r from-[#E8C879] to-[#B8860B] text-[#0B0B0B] shadow-sm"
+                : "bg-[#222] text-[#A8A8A8] hover:bg-[#333]"
             }`}
           >
             {cat.name}
@@ -268,7 +296,7 @@ export default function ServicesPage() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#A8A8A8]" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -280,18 +308,18 @@ export default function ServicesPage() {
       {loading ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="rounded-xl border bg-white overflow-hidden">
-              <div className="h-28 bg-gray-100 animate-pulse" />
+            <div key={i} className="rounded-xl border border-[#D4A84B]/20 bg-[#181818] overflow-hidden">
+              <div className="h-28 bg-[#222] animate-pulse" />
               <div className="p-4 space-y-2">
-                <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4" />
-                <div className="h-3 bg-gray-100 rounded animate-pulse w-full" />
-                <div className="h-3 bg-gray-100 rounded animate-pulse w-1/2" />
+                <div className="h-4 bg-[#222] rounded animate-pulse w-3/4" />
+                <div className="h-3 bg-[#222] rounded animate-pulse w-full" />
+                <div className="h-3 bg-[#222] rounded animate-pulse w-1/2" />
               </div>
             </div>
           ))}
         </div>
       ) : groupedServices.length === 0 ? (
-        <div className="py-16 text-center text-muted-foreground">
+        <div className="py-16 text-center text-[#A8A8A8]">
           No services found.
         </div>
       ) : (
@@ -303,10 +331,10 @@ export default function ServicesPage() {
                 <div
                   className={`w-1.5 h-5 rounded-full bg-gradient-to-b ${colors.bg}`}
                 />
-                <h2 className="text-base font-semibold text-foreground">
+                <h2 className="text-base font-semibold text-white">
                   {category.name}
                 </h2>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-[#A8A8A8]">
                   ({catServices.length})
                 </span>
               </div>
@@ -391,10 +419,10 @@ export default function ServicesPage() {
           if (!open) closeModal();
         }}
       >
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md bg-[#181818] border-[#D4A84B]/30 text-white">
           <DialogHeader>
-            <DialogTitle>{selected?.name}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-white">{selected?.name}</DialogTitle>
+            <DialogDescription className="text-[#A8A8A8]">
               {selected?.price_type === "fixed"
                 ? `${formatNaira(selected?.base_price || 0)} / ${selected?.price_unit}`
                 : selected?.price_type === "range"
@@ -404,16 +432,16 @@ export default function ServicesPage() {
           </DialogHeader>
           <div className="space-y-4">
             {selected?.is_seasonal && selected?.season_label && (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+              <div className="rounded-lg border border-[#F59E0B]/40 bg-[#F59E0B]/10 p-3 text-sm text-[#F59E0B]">
                 <span className="font-semibold">SEASONAL ·</span>{" "}
                 {selected.season_label}
               </div>
             )}
             {(selected?.requires_physical_presence ||
               selected?.requires_biometric) && (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+              <div className="rounded-lg border border-[#F59E0B]/40 bg-[#F59E0B]/10 p-3 text-sm text-[#F59E0B]">
                 <p className="font-semibold">PHYSICAL PRESENCE REQUIRED</p>
-                <p className="mt-1 text-amber-700">
+                <p className="mt-1 text-[#F59E0B]/80">
                   {selected?.requires_biometric
                     ? "BIOMETRIC CAPTURE REQUIRED. This must be completed personally through the official / authorized process."
                     : "This service requires a physical visit to an approved centre."}
@@ -421,9 +449,9 @@ export default function ServicesPage() {
               </div>
             )}
             {selected?.official_provider && (
-              <div className="rounded-lg border bg-muted/40 p-3 text-sm">
-                <p className="text-muted-foreground">
-                  <span className="font-medium text-foreground">
+              <div className="rounded-lg border border-[#D4A84B]/25 bg-[#222] p-3 text-sm">
+                <p className="text-[#A8A8A8]">
+                  <span className="font-medium text-white">
                     Official provider:
                   </span>{" "}
                   {selected.official_provider}
@@ -434,7 +462,7 @@ export default function ServicesPage() {
                         href={selected.official_provider_url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[#d4a84b] underline"
+                        className="text-[#E8C879] underline"
                       >
                         {selected.official_provider_url.replace(
                           /^https?:\/\//,
@@ -445,16 +473,16 @@ export default function ServicesPage() {
                   )}
                 </p>
                 {selected.official_fee != null && (
-                  <p className="mt-1 text-muted-foreground">
-                    <span className="font-medium text-foreground">
+                  <p className="mt-1 text-[#A8A8A8]">
+                    <span className="font-medium text-white">
                       Official fee:
                     </span>{" "}
                     {formatNaira(selected.official_fee)}
                   </p>
                 )}
                 {selected.deprince_fee != null && (
-                  <p className="mt-1 text-muted-foreground">
-                    <span className="font-medium text-foreground">
+                  <p className="mt-1 text-[#A8A8A8]">
+                    <span className="font-medium text-white">
                       DE-PRINCE service fee:
                     </span>{" "}
                     {formatNaira(selected.deprince_fee)}
@@ -462,7 +490,7 @@ export default function ServicesPage() {
                 )}
                 {selected.official_fee != null &&
                   selected.deprince_fee != null && (
-                    <p className="mt-2 border-t pt-2 font-semibold">
+                    <p className="mt-2 border-t border-[#D4A84B]/25 pt-2 font-semibold text-white">
                       TOTAL:{" "}
                       {formatNaira(
                         (selected.official_fee || 0) +
@@ -473,7 +501,7 @@ export default function ServicesPage() {
               </div>
             )}
             <div>
-              <Label>Quantity</Label>
+              <Label className="text-[#E8E8E8]">Quantity</Label>
               <Input
                 type="number"
                 min={1}
@@ -484,7 +512,7 @@ export default function ServicesPage() {
               />
             </div>
             <div>
-              <Label>Instructions</Label>
+              <Label className="text-[#E8E8E8]">Instructions</Label>
               <Textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
@@ -492,7 +520,7 @@ export default function ServicesPage() {
               />
             </div>
             <div>
-              <Label>Deadline (optional)</Label>
+              <Label className="text-[#E8E8E8]">Deadline (optional)</Label>
               <Input
                 type="datetime-local"
                 value={deadline}
@@ -501,8 +529,8 @@ export default function ServicesPage() {
             </div>
             {selected?.requires_file_upload && (
               <div>
-                <Label>Attach Files</Label>
-                <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center text-sm text-muted-foreground hover:bg-muted/50">
+                <Label className="text-[#E8E8E8]">Attach Files</Label>
+                <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#D4A84B]/30 p-6 text-center text-sm text-[#A8A8A8] hover:bg-[#222]">
                   <UploadCloud className="mb-2 h-6 w-6" />
                   Click to upload
                   <input
@@ -519,7 +547,7 @@ export default function ServicesPage() {
                     {files.map((file, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between rounded border px-2 py-1 text-sm"
+                        className="flex items-center justify-between rounded border border-[#D4A84B]/20 bg-[#222] px-2 py-1 text-sm text-white"
                       >
                         <span className="truncate">{file.name}</span>
                         <button
@@ -527,7 +555,7 @@ export default function ServicesPage() {
                             setFiles(files.filter((_, idx) => idx !== i))
                           }
                         >
-                          <X className="h-4 w-4 text-muted-foreground" />
+                          <X className="h-4 w-4 text-[#A8A8A8]" />
                         </button>
                       </div>
                     ))}
@@ -540,7 +568,7 @@ export default function ServicesPage() {
             <Button
               onClick={placeOrder}
               disabled={submitting}
-              className="w-full bg-[#d4a84b] hover:bg-[#a87c1e] text-white"
+              className="w-full"
             >
               {submitting
                 ? "Placing order..."
