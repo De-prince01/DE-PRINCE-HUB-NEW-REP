@@ -1,7 +1,9 @@
 """Main FastAPI application."""
 import logging
+import traceback
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -28,6 +30,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Temporary debug exception handler — returns traceback in 500 responses
+@app.exception_handler(Exception)
+async def debug_exception_handler(request: Request, exc: Exception):
+    tb = traceback.format_exception(type(exc), exc, exc.__traceback__)
+    logger.error("Unhandled exception: %s", "".join(tb))
+    return JSONResponse(
+        status_code=500,
+        content={"detail": str(exc), "type": type(exc).__name__, "traceback": "".join(tb)[-2000:]},
+    )
 
 # Static files for uploads (downloadable via signed/guarded routes in production)
 import os
