@@ -343,7 +343,7 @@ export default function ServicesPage() {
                   return (
                     <Link
                       key={service.id}
-                      href={`/services/${service.slug}`}
+                      href={`/use/${service.slug}`}
                     >
                       <div className="service-card group">
                         <div

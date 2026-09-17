@@ -59,7 +59,7 @@ export default function OrdersPage() {
           <CardContent className="py-16 text-center">
             <Package className="mx-auto h-10 w-10 text-muted-foreground/30" />
             <p className="mt-3 text-muted-foreground">You have no orders.</p>
-            <Link href="/services" className="mt-4 inline-block text-primary hover:underline">
+            <Link href="/use" className="mt-4 inline-block text-primary hover:underline">
               Browse services
             </Link>
           </CardContent>

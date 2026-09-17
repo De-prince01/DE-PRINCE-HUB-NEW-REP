@@ -34,7 +34,7 @@ export default function DashboardPage() {
   const activeOrders = orders.filter((o) => !["delivered", "cancelled", "refunded", "completed"].includes(o.status));
 
   const quickLinks = [
-    { href: "/services", label: "Order Services", icon: ShoppingBag, desc: "Browse digital services" },
+    { href: "/use", label: "Service Console", icon: ShoppingBag, desc: "Browse & order digital services" },
     { href: "/verifications", label: "Verification Centre", icon: ShieldCheck, desc: "NIN, BVN, CAC & document checks" },
     { href: "/computers", label: "Rent a Computer", icon: Monitor, desc: "Book cyber café time" },
     { href: "/printing", label: "Printing", icon: Printer, desc: "Submit a print job" },
@@ -55,7 +55,7 @@ export default function DashboardPage() {
           </h1>
           <p className="text-[#A8A8A8]">Everything digital, one platform.</p>
         </div>
-        <Link href="/services">
+        <Link href="/use">
           <Button>
             <Plus className="h-4 w-4" /> New Order
           </Button>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
             <div className="py-10 text-center">
               <Package className="mx-auto h-10 w-10 text-[#A8A8A8]/30" />
               <p className="mt-3 text-[#A8A8A8]">No orders yet.</p>
-              <Link href="/services" className="mt-3 inline-block">
+              <Link href="/use" className="mt-3 inline-block">
                 <Button variant="outline">Place your first order</Button>
               </Link>
             </div>

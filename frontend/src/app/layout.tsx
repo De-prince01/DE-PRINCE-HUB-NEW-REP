@@ -1,19 +1,29 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Montserrat, Cinzel } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/toaster";
 import { SITE_URL } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-body",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "De-Prince Digital Hub | Everything Digital. One Platform.",
-    template: "%s | De-Prince Digital Hub",
+    default: "DE-PRINCE DIGITAL HUB | Everything Digital. One Platform.",
+    template: "%s | DE-PRINCE DIGITAL HUB",
   },
-  description: "Everything Digital. One Platform.",
+  description:
+    "Everything Digital. One Platform. Printing, computer services, web development, graphic design, JAMB/NYSC/CAC/NIN/BVN registrations, document processing and delivery across Nigeria.",
   icons: {
     icon: "/assets/logo-favicon.svg",
     shortcut: "/assets/logo-favicon.svg",
@@ -22,8 +32,23 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
-    siteName: "De-Prince Digital Hub",
+    siteName: "DE-PRINCE DIGITAL HUB",
+    title: "DE-PRINCE DIGITAL HUB | Everything Digital. One Platform.",
+    description:
+      "Everything Digital. One Platform. Printing, computer services, web development, graphic design, JAMB/NYSC/CAC/NIN/BVN registrations, document processing and delivery across Nigeria.",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "DE-PRINCE DIGITAL HUB | Everything Digital. One Platform.",
+    description:
+      "Everything Digital. One Platform. Digital services across Nigeria.",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B0B0B",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -33,7 +58,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${montserrat.variable} ${cinzel.variable} font-body bg-ink text-text`}>
         <AuthProvider>
           {children}
           <Toaster />

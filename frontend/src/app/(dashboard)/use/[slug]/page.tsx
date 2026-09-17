@@ -50,7 +50,7 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
-      url: `/services/${service.slug}`,
+      url: `/use/${service.slug}`,
       siteName: "De-Prince Digital Hub",
     },
   };

@@ -4,23 +4,45 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;            /* #0B0B0B deep dark */
-    --foreground: 0 0% 98%;           /* #FFFFFF white */
-    --card: 0 0% 9%;                  /* #181818 card */
+    /* ---- DE-PRINCE DIGITAL HUB · Design tokens (Section 4) ---- */
+    --gold: 212 168 75;
+    --gold-bright: 232 200 121;
+    --gold-deep: 184 134 11;
+    --gold-soft: 168 124 30;
+    --charcoal: 26 26 26;
+    --ink: 11 11 11;
+    --surface: 17 17 17;
+    --surface-2: 24 24 24;
+    --line: 212 168 75;          /* hairline gold */
+    --text: 255 255 255;
+    --text-muted: 199 199 199;
+    --text-dim: 154 154 154;
+    --paper: 11 11 11;
+    --paper-card: 24 24 24;
+    --ink-on-paper: 255 255 255;
+    --success: 34 197 94;
+    --danger: 239 68 68;
+    --warn: 245 158 11;
+    --info: 56 189 248;
+
+    /* ---- shadcn-compatible HSL aliases (existing app) ---- */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 9%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 42 61% 56%;            /* #D4A84B gold */
-    --primary-foreground: 0 0% 7%;    /* dark text on gold */
-    --secondary: 0 0% 13%;            /* #222222 */
+    --primary: 42 61% 56%;
+    --primary-foreground: 0 0% 7%;
+    --secondary: 0 0% 13%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 13%;
-    --muted-foreground: 0 0% 66%;     /* #A8A8A8 */
+    --muted-foreground: 0 0% 66%;
     --accent: 0 0% 13%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 84% 60%;         /* #EF4444 */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 42 61% 56% / 0.28;      /* thin gold border */
+    --border: 42 61% 56% / 0.28;
     --input: 42 61% 56% / 0.35;
     --ring: 42 61% 56%;
     --radius: 0.75rem;
@@ -54,13 +76,20 @@
     @apply border-border;
   }
   html {
-    @apply bg-[#0B0B0B];
+    @apply bg-ink;
+    scroll-behavior: smooth;
   }
   body {
-    @apply bg-[#111111] text-foreground antialiased;
+    @apply bg-ink text-foreground antialiased;
+    font-feature-settings: "ss01";
+  }
+  ::selection {
+    background: rgba(212, 168, 75, 0.35);
+    color: #fff;
   }
 }
 
+/* ---- Legacy brand aliases (kept for existing pages) ---- */
 :root {
   --brand-gold: #d4a84b;
   --brand-gold-bright: #f0d382;
@@ -69,20 +98,49 @@
   --brand-ink: #0b0b0b;
 }
 
+/* ---- Typography helpers ---- */
+.font-display {
+  font-family: var(--font-display), Cinzel, serif;
+}
+.font-body,
+body {
+  font-family: var(--font-body), Montserrat, ui-sans-serif, system-ui, sans-serif;
+}
+.eyebrow {
+  @apply font-display text-xs font-semibold uppercase tracking-[0.35em] text-gold;
+}
+.section-title {
+  @apply font-display text-3xl font-bold tracking-tight text-white sm:text-4xl;
+}
+
+/* ---- Logo / brand ---- */
 .brand img {
   height: 56px;
   width: auto;
   display: block;
 }
-
 @media (max-width: 640px) {
   .brand img {
-    height: 40px;
+    height: 44px;
+  }
+}
+.brand-lockup img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+@media (max-width: 640px) {
+  .brand-lockup img {
+    height: 36px;
   }
 }
 
+/* ---- Gold actions (Section 12: gold-only primary) ---- */
 .btn-gold {
   @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#E8C879] via-[#D4A84B] to-[#B8860B] px-5 py-2.5 text-sm font-semibold text-[#0B0B0B] shadow-[0_0_20px_rgba(212,168,75,0.35)] transition-all hover:shadow-[0_0_30px_rgba(212,168,75,0.55)] hover:brightness-110 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50;
+}
+.btn-ghost-gold {
+  @apply inline-flex items-center justify-center rounded-lg border border-[#D4A84B]/40 bg-transparent px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#D4A84B]/10 hover:border-[#D4A84B]/70 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50;
 }
 
 .gold-border {
@@ -114,5 +172,42 @@
 }
 
 .service-card-desc {
-  @apply text-xs text-[#A8A8A8] line-clamp-2;
+  @apply text-xs text-[#9A9A9A] line-clamp-2;
+}
+
+/* ---- Trust strip marquee ---- */
+.trust-strip {
+  @apply border-y border-[#D4A84B]/20 bg-[#1A1A1A]/60;
+}
+.trust-item {
+  @apply flex items-center gap-2 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-[#E8C879]/90;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+/* ---- Section rhythm ---- */
+.section-pad {
+  @apply py-16 md:py-20;
+}
+
+/* ---- Hero image treatment (Section 6.1) ---- */
+.hero-image {
+  @apply relative overflow-hidden;
+}
+.hero-image img {
+  @apply object-cover;
+}
+
+/* ---- Nav link ---- */
+.nav-link {
+  @apply text-sm font-medium text-[#C7C7C7] transition-colors hover:text-[#E8C879];
+}
+.nav-link-active {
+  @apply text-[#E8C879];
 }

@@ -46,7 +46,7 @@ interface NavItem {
 
 const customerNav: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/services", label: "Services", icon: ShoppingBag },
+  { href: "/use", label: "Service Console", icon: ShoppingBag },
   { href: "/verifications", label: "Verifications", icon: ShieldCheck },
   { href: "/appointments", label: "Appointments", icon: CalendarClock },
   { href: "/quotations", label: "Quotations", icon: FileText },

@@ -76,7 +76,7 @@ export default function ServiceDetailClient({
         onClick={() => router.back()}
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
-        <ArrowLeft className="h-4 w-4" /> Back to services
+        <ArrowLeft className="h-4 w-4" /> Back to console
       </button>
 
       <Card>
@@ -104,6 +104,27 @@ export default function ServiceDetailClient({
               <span><span className="font-semibold">SEASONAL ·</span> {service.season_label}</span>
             </div>
           )}
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-[#D4A84B]/40 bg-[#D4A84B]/10 p-4 text-sm">
+            <span className="font-semibold text-[#E8C879]">COST ALERT:</span>
+            {service.price_type === "fixed" ? (
+              <span className="text-white">
+                {formatNaira(service.base_price)} / {service.price_unit}
+                {service.payment_required ? " — payment required before processing." : ""}
+              </span>
+            ) : service.price_type === "range" ? (
+              <span className="text-white">
+                from {formatNaira(service.minimum_price || service.base_price)} — final quote confirmed by our team.
+              </span>
+            ) : (
+              <span className="text-white">Quotation required — we will confirm the exact price.</span>
+            )}
+            {service.official_fee != null && service.deprince_fee != null && (
+              <span className="text-[#A8A8A8]">
+                (Official fee {formatNaira(service.official_fee)} + DE-PRINCE service fee {formatNaira(service.deprince_fee)})
+              </span>
+            )}
+          </div>
 
           <div className="mt-4 flex flex-wrap gap-1">
             {service.requires_file_upload && <Badge variant="secondary">Upload required</Badge>}
