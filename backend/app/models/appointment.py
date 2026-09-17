@@ -34,11 +34,7 @@ class Appointment(Base):
     time = Column(Time, nullable=False)                       # start time
     duration_minutes = Column(Integer, default=30, nullable=False)
 
-    status = Column(
-        SAEnum(AppointmentStatus, name="appointment_status", values_callable=lambda c: [e.value for e in c]),
-        default=AppointmentStatus.REQUESTED,
-        nullable=False,
-    )
+    status = Column(String(30), default="requested", nullable=False)
     requirements = Column(JSON)
     notes = Column(Text)
 

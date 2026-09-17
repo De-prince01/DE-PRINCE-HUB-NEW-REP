@@ -50,7 +50,7 @@ class Transaction(Base):
     payment_method = Column(SAEnum(PaymentMethod, name="payment_method", values_callable=lambda c: [e.value for e in c]))
     gateway = Column(String(50))
     gateway_reference = Column(String(200))
-    meta = Column(JSON, default=dict)
+    meta = Column("metadata", JSON, default=dict)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
     completed_at = Column(DateTime(timezone=True))
 

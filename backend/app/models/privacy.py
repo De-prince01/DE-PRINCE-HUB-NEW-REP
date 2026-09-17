@@ -10,7 +10,6 @@ from sqlalchemy import Uuid, JSON
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.enums import PrivacyRequestType, PrivacyRequestStatus
 
 
 class DataPurpose(Base):
@@ -46,9 +45,8 @@ class PrivacyRequest(Base):
     id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     request_number = Column(String(50), unique=True, nullable=False)
     user_id = Column(Uuid(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    request_type = Column(SAEnum(PrivacyRequestType, name="privacy_request_type", values_callable=lambda c: [e.value for e in c]), nullable=False)
-    status = Column(SAEnum(PrivacyRequestStatus, name="privacy_request_status", values_callable=lambda c: [e.value for e in c]),
-                    default="pending", nullable=False)
+    request_type = Column(String(30), nullable=False)
+    status = Column(String(30), default="pending", nullable=False)
     reason = Column(Text)
     processed_by = Column(Uuid(as_uuid=True), ForeignKey("users.id"))
     requested_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
