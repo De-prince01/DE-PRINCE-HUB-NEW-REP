@@ -58,14 +58,21 @@ class Service(Base):
     display_order = Column(Integer, default=0)
 
     # Pricing
-    price_type = Column(String(20), default="fixed")          # fixed | quote | range
-    base_price = Column(Float, nullable=False, default=0)     # fixed price
+    price_type = Column(String(20), default="fixed")          # fixed | quote | range | conditional
+    base_price = Column(Float, nullable=False, default=0)     # fixed price (or "record found" price for conditional)
     price_unit = Column(String(50), default="fixed")
     quotation_required = Column(Boolean, default=False, nullable=False)
     minimum_price = Column(Float)
     maximum_price = Column(Float)
     estimated_processing_time = Column(String(100))
     estimated_duration = Column(String(100))  # legacy alias
+
+    # Pricing management (admin-editable, no code changes required)
+    promotional_price = Column(Float)  # optional discounted advertised price
+    processing_fee = Column(Float)     # extra DE-PRINCE processing fee
+    no_record_price = Column(Float)    # conditional services: charge when no record is found
+    price_notice = Column(Text)        # customer-facing pricing notice (e.g. conditional-cost explanation)
+    bookable = Column(Boolean, default=True, nullable=False)  # False = visible but "Service Not Available"
 
     # Requirements
     requirements = Column(JSON)

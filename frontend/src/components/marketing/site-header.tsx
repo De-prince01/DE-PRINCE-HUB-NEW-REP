@@ -60,8 +60,9 @@ export default function SiteHeader() {
             Everything Digital. One Platform.
           </p>
           <div className="flex items-center gap-5">
-            <a href="tel:+2348000000000" className="hover:text-gold-bright">+234 800 000 0000</a>
-            <a href="mailto:hello@deprincehub.com" className="hover:text-gold-bright">hello@deprincehub.com</a>
+            <a href="tel:+2347011112229" className="hover:text-gold-bright">0701 111 2229</a>
+            <a href="tel:+2348100200730" className="hover:text-gold-bright">0810 020 0730</a>
+            <a href="mailto:deprince969@gmail.com" className="hover:text-gold-bright">deprince969@gmail.com</a>
             <Link href="/track" className="text-gold hover:text-gold-bright">Track Order</Link>
           </div>
         </div>

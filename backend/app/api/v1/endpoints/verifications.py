@@ -57,6 +57,24 @@ class VerificationListOut(BaseModel):
     total: int
 
 
+def _record_not_found(result: dict) -> bool:
+    """Detect 'no record found' from a real provider result payload.
+
+    Honest detection only — we never fabricate results. If the payload does not
+    contain a clear found/verified signal we default to treating a record as
+    found so we never under-charge on ambiguous data.
+    """
+    if not isinstance(result, dict):
+        return False
+    for key in ("record_found", "found", "confirmed", "success"):
+        if key in result:
+            return bool(result[key]) is False
+    if "verified" in result:
+        return bool(result["verified"]) is False
+    msg = str(result.get("message", "")).lower()
+    return any(term in msg for term in ("not found", "no record", "does not exist"))
+
+
 # ── Customer: create request ──────────────────────────────────────────────
 @router.post("", response_model=VerificationOut)
 async def create_verification(
@@ -228,6 +246,17 @@ async def staff_update_verification(
         req.provider_reference = payload.provider_reference
     if payload.result is not None:
         req.result = payload.result
+        # Conditional pricing driven by the ACTUAL provider result (never fabricated).
+        # When an admin/staff records a live result for a service that carries a
+        # no_record_price, apply the charge that matches what the provider reported.
+        if payload.amount is None and req.service_id:
+            svc = await db.execute(select(Service).where(Service.id == req.service_id))
+            svc_row = svc.scalar_one_or_none()
+            if svc_row and svc_row.no_record_price is not None and svc_row.price_type == "conditional":
+                if _record_not_found(payload.result):
+                    req.amount = svc_row.no_record_price
+                else:
+                    req.amount = svc_row.base_price or 0.0
     if payload.amount is not None:
         req.amount = payload.amount
     if payload.is_paid is not None:

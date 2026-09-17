@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { CalendarRange, UploadCloud, X, ArrowLeft } from "lucide-react";
+import { CalendarRange, Info, UploadCloud, X, ArrowLeft, XCircle } from "lucide-react";
 import type { Service, Order } from "@/types";
 
 export default function ServiceDetailClient({
@@ -29,6 +29,18 @@ export default function ServiceDetailClient({
   const [deadline, setDeadline] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
+
+  const booked = service.bookable !== false;
+  const promo = service.promotional_price != null ? service.promotional_price : null;
+  const effectiveBase = promo != null ? promo : service.base_price;
+  const priceText =
+    service.price_type === "fixed"
+      ? formatNaira(effectiveBase)
+      : service.price_type === "range"
+        ? `from ${formatNaira(service.minimum_price || effectiveBase)}`
+        : service.price_type === "conditional"
+          ? formatNaira(service.base_price)
+          : "Request a Quote";
 
   useEffect(() => {
     api<Service>(`/services/by-slug/${encodeURIComponent(slug)}`)
@@ -89,14 +101,38 @@ export default function ServiceDetailClient({
               </p>
             </div>
             <div className="text-right">
-              <p className="text-3xl font-bold text-primary">{formatNaira(service.base_price)}</p>
-              <p className="text-xs text-muted-foreground">/ {service.price_unit}</p>
+              {promo != null && service.base_price > 0 && (
+                <p className="text-sm text-muted-foreground">
+                  <s>{formatNaira(service.base_price)}</s>{" "}
+                  <span className="rounded bg-green-100 px-1 text-xs font-semibold text-green-700">Promo</span>
+                </p>
+              )}
+              <p className="text-3xl font-bold text-primary">
+                {booked ? priceText : "Not Available"}
+              </p>
+              {service.price_type === "fixed" && service.price_unit && booked && (
+                <p className="text-xs text-muted-foreground">/ {service.price_unit}</p>
+              )}
             </div>
           </div>
 
           <p className="mt-4 text-muted-foreground">
             {service.description || service.short_description}
           </p>
+
+          {service.price_notice && (
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-[#D4A84B]/40 bg-[#D4A84B]/10 p-3 text-sm text-[#E8C879]">
+              <Info className="h-4 w-4 shrink-0" />
+              <span>{service.price_notice}</span>
+            </div>
+          )}
+
+          {!booked && (
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-rose-300 bg-rose-50 p-3 text-sm text-rose-800">
+              <XCircle className="h-4 w-4" />
+              <span><span className="font-semibold">Service Not Available</span> — this service is currently not accepting new orders.</span>
+            </div>
+          )}
 
           {service.is_seasonal && service.season_label && (
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
@@ -109,15 +145,22 @@ export default function ServiceDetailClient({
             <span className="font-semibold text-[#E8C879]">COST ALERT:</span>
             {service.price_type === "fixed" ? (
               <span className="text-white">
-                {formatNaira(service.base_price)} / {service.price_unit}
+                {formatNaira(effectiveBase)} / {service.price_unit}
                 {service.payment_required ? " — payment required before processing." : ""}
               </span>
             ) : service.price_type === "range" ? (
               <span className="text-white">
-                from {formatNaira(service.minimum_price || service.base_price)} — final quote confirmed by our team.
+                from {formatNaira(service.minimum_price || effectiveBase)} — final quote confirmed by our team.
+              </span>
+            ) : service.price_type === "conditional" ? (
+              <span className="text-white">
+                {formatNaira(service.base_price)} — final charge depends on the verification result.
+                {service.no_record_price != null && (
+                  <> No record found costs {formatNaira(service.no_record_price)}.</>
+                )}
               </span>
             ) : (
-              <span className="text-white">Quotation required — we will confirm the exact price.</span>
+              <span className="text-white">Request a quote — we will confirm the exact price.</span>
             )}
             {service.official_fee != null && service.deprince_fee != null && (
               <span className="text-[#A8A8A8]">
@@ -127,6 +170,7 @@ export default function ServiceDetailClient({
           </div>
 
           <div className="mt-4 flex flex-wrap gap-1">
+            {!booked && <Badge variant="destructive">Service Not Available</Badge>}
             {service.requires_file_upload && <Badge variant="secondary">Upload required</Badge>}
             {service.quotation_required && <Badge variant="info">Quote required</Badge>}
             {service.requires_physical_presence && <Badge variant="warning">Physical presence</Badge>}
@@ -169,11 +213,13 @@ export default function ServiceDetailClient({
             </div>
           )}
 
-          <Button className="mt-6 w-full sm:w-auto" onClick={() => setOpen(true)}>
-            {service.quotation_required
-              ? "Request Quotation"
-              : `Order now · ${formatNaira(service.base_price * quantity)}`}
-          </Button>
+          {booked && (
+            <Button className="mt-6 w-full sm:w-auto" onClick={() => setOpen(true)}>
+              {service.quotation_required || service.price_type === "quote"
+                ? "Request a Quote"
+                : `Order now · ${formatNaira((effectiveBase || 0) * quantity)}`}
+            </Button>
+          )}
         </CardContent>
       </Card>
 
@@ -231,10 +277,12 @@ export default function ServiceDetailClient({
             <h3 className="text-lg font-semibold">{service.name}</h3>
             <p className="mb-4 text-sm text-muted-foreground">
               {service.price_type === "fixed"
-                ? `${formatNaira(service.base_price)} / ${service.price_unit}`
+                ? `${formatNaira(effectiveBase)} / ${service.price_unit}`
                 : service.price_type === "range"
                   ? `${formatNaira(service.minimum_price || 0)} - ${formatNaira(service.maximum_price || 0)}`
-                  : "Quotation required - we will confirm the price"}
+                  : service.price_type === "conditional"
+                    ? `${formatNaira(service.base_price)} (may vary by result)`
+                    : "Request a quote - we will confirm the price"}
             </p>
             <div className="space-y-4">
               <div>

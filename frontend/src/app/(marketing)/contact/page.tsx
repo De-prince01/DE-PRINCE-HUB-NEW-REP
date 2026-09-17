@@ -16,10 +16,11 @@ import { showToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
 
 const CHANNELS = [
-  { icon: Phone, title: "Call us", value: "+234 800 000 0000", href: "tel:+2348000000000", note: "Mon – Sat, 8AM – 8PM" },
-  { icon: MessageCircle, title: "WhatsApp", value: "Chat with support", href: "https://wa.me/2348000000000", note: "Fastest response" },
-  { icon: Mail, title: "Email", value: "hello@deprincehub.com", href: "mailto:hello@deprincehub.com", note: "Replies within 24h" },
-  { icon: MapPin, title: "Visit", value: "Iyana-Ipaja, Lagos", href: "/branches", note: "All branches" },
+  { icon: Phone, title: "Call us", value: "0701 111 2229", href: "tel:+2347011112229", note: "Mon – Sat, 8AM – 8PM" },
+  { icon: MessageCircle, title: "WhatsApp", value: "Chat with support", href: "https://wa.me/2347011112229", note: "Fastest response" },
+  { icon: MessageCircle, title: "WhatsApp (2)", value: "Chat with support", href: "https://wa.me/2348100200730", note: "Secondary line" },
+  { icon: Mail, title: "Email", value: "deprince969@gmail.com", href: "mailto:deprince969@gmail.com", note: "Replies within 24h" },
+  { icon: MapPin, title: "Visit", value: "Federal University of Kashere", href: "/branches", note: "Akko LGA, Gombe State" },
 ];
 
 export default function ContactPage() {
@@ -63,7 +64,7 @@ export default function ContactPage() {
         </p>
       </section>
 
-      <section className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {CHANNELS.map((c) => (
           <a key={c.title} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="card-premium block p-6">
             <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold/15">

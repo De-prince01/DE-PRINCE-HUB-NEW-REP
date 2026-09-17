@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import bcrypt
-from sqlalchemy import select, text
+from sqlalchemy import select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import SessionLocal
@@ -415,6 +415,134 @@ async def seed():
                     official_provider_url="https://passport.immigration.gov.ng",
                     short_description="Booking assistance for Nigerian passport appointments.",
                     description="Help booking and preparing for your international passport appointment on the Immigration portal."),
+            # ── NIN / verification centre services (pricing manageable by admin) ──
+            Service(category_id=cats["government-services"].id,
+                    name="NIN Search", slug="nin-search",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    official_provider="National Identity Management Commission (NIMC)",
+                    official_provider_url="https://nimc.gov.ng",
+                    short_description="Verify a NIN against NIMC records.",
+                    description="We check a National Identification Number against official NIMC records and report whether the record exists."),
+            Service(category_id=cats["government-services"].id,
+                    name="NIN Search V1", slug="nin-search-v1",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    official_provider="National Identity Management Commission (NIMC)",
+                    official_provider_url="https://nimc.gov.ng",
+                    short_description="NIN verification against NIMC records (V1 channel).",
+                    description="Verify a National Identification Number via our V1 verification channel."),
+            Service(category_id=cats["government-services"].id,
+                    name="NIN Verification V3", slug="nin-verification-v3",
+                    base_price=150, price_unit="verification", price_type="fixed",
+                    official_provider="National Identity Management Commission (NIMC)",
+                    official_provider_url="https://nimc.gov.ng",
+                    short_description="Full NIN verification (V3 channel).",
+                    description="Complete NIN verification of a National Identification Number with detailed record confirmation."),
+            Service(category_id=cats["government-services"].id,
+                    name="NIN Search V4", slug="nin-search-v4",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    official_provider="National Identity Management Commission (NIMC)",
+                    official_provider_url="https://nimc.gov.ng",
+                    short_description="NIN verification against NIMC records (V4 channel).",
+                    description="Verify a National Identification Number via our V4 verification channel."),
+            Service(category_id=cats["government-services"].id,
+                    name="NIN Demography Search V1", slug="nin-demography-search-v1",
+                    base_price=150, price_unit="search", price_type="fixed", bookable=False,
+                    is_active=True,
+                    price_notice="Service Not Available",
+                    official_provider="National Identity Management Commission (NIMC)",
+                    official_provider_url="https://nimc.gov.ng",
+                    short_description="Demographic NIN search (V1 channel).",
+                    description="Demographic search service for NIN records. This service is currently not available for payment."),
+            Service(category_id=cats["government-services"].id,
+                    name="Phone Number Search", slug="phone-number-search",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    short_description="Search a phone number against official records.",
+                    description="We check a phone number against available official records and report the result."),
+            Service(category_id=cats["government-services"].id,
+                    name="Phone Number Search V3", slug="phone-number-search-v3",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    short_description="Phone number lookup (V3 channel).",
+                    description="Phone number lookup via our V3 verification channel."),
+            Service(category_id=cats["government-services"].id,
+                    name="Phone Number Search V4", slug="phone-number-search-v4",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    short_description="Phone number lookup (V4 channel).",
+                    description="Phone number lookup via our V4 verification channel."),
+            Service(category_id=cats["government-services"].id,
+                    name="NIN Verification", slug="nin-verification",
+                    base_price=150, price_unit="verification", price_type="conditional",
+                    no_record_price=50,
+                    price_notice="This service costs ₦150 if a record is found, and ₦50 if no record is found.",
+                    official_provider="National Identity Management Commission (NIMC)",
+                    official_provider_url="https://nimc.gov.ng",
+                    short_description="NIN verification with conditional pricing based on the result.",
+                    description="Verify a National Identification Number. This service costs ₦150 if a record is found, and ₦50 if no record is found. The charge is calculated from the actual verification result."),
+            Service(category_id=cats["government-services"].id,
+                    name="BVN Search", slug="bvn-search",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    official_provider="Nigeria Inter-Bank Settlement System (NIBSS)",
+                    official_provider_url="https://nibss-plc.com.ng",
+                    short_description="BVN verification against NIBSS records.",
+                    description="Verify a Bank Verification Number against official NIBSS records."),
+            Service(category_id=cats["government-services"].id,
+                    name="BVN V2 Search", slug="bvn-v2-search",
+                    base_price=150, price_unit="search", price_type="fixed",
+                    official_provider="Nigeria Inter-Bank Settlement System (NIBSS)",
+                    official_provider_url="https://nibss-plc.com.ng",
+                    short_description="BVN verification against NIBSS records (V2 channel).",
+                    description="Verify a Bank Verification Number via our V2 verification channel."),
+            Service(category_id=cats["government-services"].id,
+                    name="Phone Verification V1", slug="phone-verification-v1",
+                    base_price=150, price_unit="verification", price_type="fixed",
+                    price_notice="This service costs ₦150. The price is configurable from the admin panel.",
+                    short_description="Phone number verification (V1 channel).",
+                    description="Phone number verification via our V1 channel. Price is configurable by the admin from the pricing panel."),
+            # ── JAMB reprint / print-out services ──────────────────────────
+            Service(category_id=cats["jamb-services"].id,
+                    name="JAMB Original Result Slip Print Out", slug="jamb-original-result-slip-printout",
+                    base_price=2200, price_unit="service", price_type="fixed",
+                    is_seasonal=True, season_label="JAMB/UTME season (Jan-May)",
+                    official_provider="Joint Admissions and Matriculation Board (JAMB)",
+                    official_provider_url="https://www.jamb.gov.ng",
+                    price_notice="This Service will cost you (₦2,200)",
+                    short_description="Print out of your JAMB original result slip.",
+                    description="We print your JAMB original result slip. This Service will cost you (₦2,200)."),
+            Service(category_id=cats["jamb-services"].id,
+                    name="JAMB 2026 Exam Slip Printing", slug="jamb-2026-exam-slip-printing",
+                    base_price=500, price_unit="service", price_type="fixed",
+                    is_seasonal=True, season_label="JAMB/UTME season (Jan-May)",
+                    official_provider="Joint Admissions and Matriculation Board (JAMB)",
+                    official_provider_url="https://www.jamb.gov.ng",
+                    price_notice="This Service will cost you (₦500)",
+                    short_description="Printing of your JAMB 2026 exam slip.",
+                    description="We print your JAMB 2026 exam slip. This Service will cost you (₦500)."),
+            Service(category_id=cats["jamb-services"].id,
+                    name="JAMB Admission Letter Print Out", slug="jamb-admission-letter-printout",
+                    base_price=2000, price_unit="service", price_type="fixed",
+                    is_seasonal=True, season_label="JAMB/UTME season (Jan-May)",
+                    official_provider="Joint Admissions and Matriculation Board (JAMB)",
+                    official_provider_url="https://www.jamb.gov.ng",
+                    price_notice="This Service will cost you (₦2,000)",
+                    short_description="Print out of your JAMB admission letter.",
+                    description="We print your JAMB admission letter. This Service will cost you (₦2,000)."),
+            Service(category_id=cats["jamb-services"].id,
+                    name="JAMB Re-Prints / Other JAMB Services", slug="jamb-reprints-other",
+                    base_price=500, price_unit="service", price_type="fixed",
+                    is_seasonal=True, season_label="JAMB/UTME season (Jan-May)",
+                    official_provider="Joint Admissions and Matriculation Board (JAMB)",
+                    official_provider_url="https://www.jamb.gov.ng",
+                    price_notice="This Service will cost you (₦500)",
+                    short_description="Re-prints and other JAMB document services.",
+                    description="Other JAMB printing and re-print services. This Service will cost you (₦500)."),
+            Service(category_id=cats["jamb-services"].id,
+                    name="JAMB Reprint Original Result Slip", slug="jamb-reprint-original-result-slip",
+                    base_price=500, price_unit="service", price_type="fixed",
+                    is_seasonal=True, season_label="JAMB/UTME season (Jan-May)",
+                    official_provider="Joint Admissions and Matriculation Board (JAMB)",
+                    official_provider_url="https://www.jamb.gov.ng",
+                    price_notice="This Service will cost you (₦500)",
+                    short_description="Re-print of your JAMB original result slip.",
+                    description="We re-print your JAMB original result slip. This Service will cost you (₦500)."),
         ]
 
         for svc in services:
@@ -424,6 +552,38 @@ async def seed():
             if existing.scalar_one_or_none():
                 continue
             db.add(svc)
+
+        # ── Price normalization: force quote-only services ───────────────
+        # Services whose prices have NOT been confirmed must not show invented
+        # prices. They are presented as "Request a Quote" on the storefront.
+        QUOTE_CATEGORY_SLUGS = {
+            "academic-services",
+            "printing",
+            "graphic-design",
+            "web-development",
+            "computer-services",
+        }
+        QUOTE_SERVICE_SLUGS = {
+            "cac-business-registration",
+            "cac-business-search",
+            "business-registration",
+            "government-portal",
+        }
+        for cat_slug in QUOTE_CATEGORY_SLUGS:
+            cat = cats.get(cat_slug)
+            if cat is None:
+                continue
+            await db.execute(
+                update(Service)
+                .where(Service.category_id == cat.id)
+                .values(price_type="quote", quotation_required=True)
+            )
+        await db.execute(
+            update(Service)
+            .where(Service.slug.in_(QUOTE_SERVICE_SLUGS))
+            .values(price_type="quote", quotation_required=True)
+        )
+        await db.flush()
 
         # Settings (idempotent)
         settings_data = [

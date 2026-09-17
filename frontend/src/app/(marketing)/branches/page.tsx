@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   MapPin,
   Clock,
   Phone,
   Mail,
-  Navigation,
   Wifi,
   Printer,
   Monitor,
@@ -14,40 +14,23 @@ import {
 import SectionHeading from "@/components/marketing/section-heading";
 
 export const metadata: Metadata = {
-  title: "Our Branches",
+  title: "Visit Our Store",
   description:
-    "Visit any DE-PRINCE DIGITAL HUB branch in Lagos and Abuja for printing, registrations, computers, design and more.",
+    "Visit DE-PRINCE DIGITAL HUB at the Federal University of Kashere, Akko LGA, Gombe State for printing, registrations, computers, design and more.",
 };
 
 const BRANCHES = [
   {
-    name: "Iyana-Ipaja Branch",
-    city: "Lagos",
-    tag: "Main Branch",
-    address: "1 Digital Hub Plaza, Iyana-Ipaja Road, Lagos",
+    name: "DE-PRINCE DIGITAL HUB",
+    city: "Gombe State",
+    tag: "Main Store",
+    address: "Federal University of Kashere, Akko LGA, Gombe State, Nigeria",
     hours: "Mon – Sat: 8:00 AM – 8:00 PM",
-    phone: "+234 800 000 0001",
-    email: "iyana-ipaja@deprincehub.com",
+    phone: "0701 111 2229",
+    wa: "2347011112229",
+    email: "deprince969@gmail.com",
     services: ["Full Service Centre", "Cyber Café & Computers", "Registrations Desk", "Printing & Binding"],
     featured: true,
-  },
-  {
-    name: "Agege Branch",
-    city: "Lagos",
-    address: "Old Lagos-Abeokuta Expressway, Agege, Lagos",
-    hours: "Mon – Sat: 8:00 AM – 8:00 PM",
-    phone: "+234 800 000 0002",
-    email: "agege@deprincehub.com",
-    services: ["Printing & Binding", "Academic Services", "Computer Repairs", "Online Registrations"],
-  },
-  {
-    name: "Wuse Branch",
-    city: "Abuja",
-    address: "Wuse Zone 4, Abuja FCT",
-    hours: "Mon – Sat: 9:00 AM – 6:00 PM",
-    phone: "+234 800 000 0003",
-    email: "wuse@deprincehub.com",
-    services: ["Government Registrations", "Business (CAC) Desk", "Design Studio", "Delivery Hub"],
   },
 ];
 
@@ -56,16 +39,16 @@ export default function BranchesPage() {
     <div className="container section-pad">
       <section className="mx-auto max-w-2xl text-center">
         <p className="eyebrow">Visit Us</p>
-        <h1 className="section-title mt-3">Our Branches</h1>
+        <h1 className="section-title mt-3">Visit Our Store</h1>
         <p className="mt-4 text-base leading-relaxed text-text-muted">
-          Walk in at any branch — or order online and pick up / get delivery
-          anywhere in Lagos and Abuja.
+          Walk into the DE-PRINCE DIGITAL HUB store at the Federal University of
+          Kashere — or order online and pick up / get delivery in Gombe State.
         </p>
       </section>
 
-      <div className="mt-14 grid gap-6 lg:grid-cols-3">
+      <div className="mt-14 grid gap-6 lg:grid-cols-1">
         {BRANCHES.map((b) => (
-          <div key={b.name} className="card-premium flex flex-col p-6">
+          <div key={b.name} className="card-premium mx-auto flex w-full max-w-3xl flex-col p-6">
             <div className="flex items-center justify-between">
               <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold/15">
                 <MapPin className="h-5 w-5 text-gold-bright" />
@@ -92,7 +75,7 @@ export default function BranchesPage() {
             </p>
 
             <div className="mt-5 border-t border-gold/15 pt-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gold">At this branch</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-gold">At this store</p>
               <ul className="mt-2 grid gap-1.5">
                 {b.services.map((s) => (
                   <li key={s} className="flex items-center gap-2 text-sm text-text-muted">
@@ -103,11 +86,11 @@ export default function BranchesPage() {
             </div>
 
             <div className="mt-5 flex gap-2">
-              <a href={`https://wa.me/234${b.phone.replace(/\D/g, "").slice(-10)}`} target="_blank" rel="noreferrer" className="btn-ghost-gold flex-1 px-3 py-2 text-xs">
+              <a href={`https://wa.me/${b.wa}`} target="_blank" rel="noreferrer" className="btn-ghost-gold flex-1 px-3 py-2 text-xs">
                 WhatsApp
               </a>
-              <a href={`tel:${b.phone.replace(/\s/g, "")}`} className="btn-gold flex-1 px-3 py-2 text-xs">
-                Call Branch
+              <a href="tel:+2347011112229" className="btn-gold flex-1 px-3 py-2 text-xs">
+                Call Store
               </a>
             </div>
           </div>
@@ -133,22 +116,15 @@ export default function BranchesPage() {
         </div>
       </section>
 
-      <SectionProp />
+      <section className="mt-16 text-center">
+        <h2 className="font-display text-2xl font-bold text-white">Don&apos;t want to make the trip?</h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm text-text-muted">
+          Order online and track your order or booking from anywhere via the dashboard.
+        </p>
+        <Link href="/track" className="btn-gold mt-6 inline-flex">
+          Track an order <ArrowRight className="ml-1 h-4 w-4" />
+        </Link>
+      </section>
     </div>
-  );
-}
-
-function SectionProp() {
-  return (
-    <section className="mt-16 text-center">
-      <h2 className="font-display text-2xl font-bold text-white">Opening a business or a branch?</h2>
-      <p className="mx-auto mt-3 max-w-xl text-sm text-text-muted">
-        DE-PRINCE services are available in Lagos and Abuja. Track your delivery or
-        booking from anywhere via the dashboard.
-      </p>
-      <a href="/track" className="btn-gold mt-6 inline-flex">
-        Track an order <ArrowRight className="ml-1 h-4 w-4" />
-      </a>
-    </section>
   );
 }

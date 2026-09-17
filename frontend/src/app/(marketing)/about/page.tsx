@@ -28,7 +28,7 @@ const VALUES = [
 const STATS = [
   { value: "20+", label: "Service Categories" },
   { value: "100+", label: "Services Live" },
-  { value: "2", label: "Cities, One Platform" },
+  { value: "1", label: "Main Store — Kashere" },
   { value: "24/7", label: "Online Ordering" },
 ];
 
@@ -76,9 +76,10 @@ export default function AboutPage() {
             </p>
             <p>
               Today DE-PRINCE DIGITAL HUB runs a full online platform alongside
-              physical branches, with registered processing for official
-              services, same-day printing, nationwide delivery and an academy
-              that trains the next generation of digital workers.
+              our physical store at the Federal University of Kashere, Akko LGA,
+              Gombe State, with registered processing for official services,
+              same-day printing, nationwide delivery and an academy that trains
+              the next generation of digital workers.
             </p>
           </div>
         </div>
@@ -86,7 +87,7 @@ export default function AboutPage() {
           {[
             { icon: HeartHandshake, title: "Trusted Processing", desc: "Authorized handling of NIN, BVN, CAC, NYSC and official portal services with verified records." },
             { icon: TrendingUp, title: "Work That Turns Up", desc: "Documents, designs and applications delivered — physically or digitally — on time." },
-            { icon: Building2, title: "Community-Grounded", desc: "Physical branches in Lagos and Abuja, staffed by people who know your neighbourhood." },
+            { icon: Building2, title: "Community-Grounded", desc: "A real store at the Federal University of Kashere in Gombe State, staffed by people who know your campus and community." },
           ].map((v) => (
             <div key={v.title} className="card-premium flex gap-4 p-5">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gold/15">

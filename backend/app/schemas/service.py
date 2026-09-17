@@ -43,7 +43,7 @@ class ServiceBase(BaseModel):
     description: Optional[str] = None
     short_description: Optional[str] = None
 
-    price_type: str = "fixed"                # fixed | quote | range
+    price_type: str = "fixed"                # fixed | quote | range | conditional
     base_price: float = Field(default=0, ge=0)
     price_unit: str = "fixed"
     quotation_required: bool = False
@@ -51,6 +51,13 @@ class ServiceBase(BaseModel):
     maximum_price: Optional[float] = None
     estimated_processing_time: Optional[str] = None
     estimated_duration: Optional[str] = None
+
+    # Pricing management (admin-editable without code changes)
+    promotional_price: Optional[float] = None
+    processing_fee: Optional[float] = None
+    no_record_price: Optional[float] = None
+    price_notice: Optional[str] = None
+    bookable: bool = True
 
     requirements: Optional[List[str]] = None
     required_documents: Optional[List[str]] = None
@@ -110,6 +117,13 @@ class ServiceUpdate(BaseModel):
     maximum_price: Optional[float] = None
     estimated_processing_time: Optional[str] = None
     estimated_duration: Optional[str] = None
+
+    # Pricing management (admin-editable without code changes)
+    promotional_price: Optional[float] = None
+    processing_fee: Optional[float] = None
+    no_record_price: Optional[float] = None
+    price_notice: Optional[str] = None
+    bookable: Optional[bool] = None
 
     requirements: Optional[List[str]] = None
     required_documents: Optional[List[str]] = None

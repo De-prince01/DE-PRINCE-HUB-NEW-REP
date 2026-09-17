@@ -57,6 +57,12 @@ export interface Service {
   estimated_processing_time?: string | null;
   estimated_duration?: string | null;
 
+  promotional_price?: number | null;
+  processing_fee?: number | null;
+  no_record_price?: number | null;
+  price_notice?: string | null;
+  bookable?: boolean;
+
   requirements?: string[] | null;
   required_documents?: string[] | null;
   requires_file_upload: boolean;

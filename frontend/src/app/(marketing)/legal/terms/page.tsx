@@ -94,7 +94,7 @@ export default function TermsPage() {
         <section>
           <h2 className="font-display text-lg font-semibold text-white">9. Contact</h2>
           <p className="mt-2">
-            Legal or service queries: <a href="mailto:legal@deprincehub.com" className="text-gold hover:text-gold-bright">legal@deprincehub.com</a>.
+            Legal or service queries: <a href="mailto:deprince969@gmail.com" className="text-gold hover:text-gold-bright">deprince969@gmail.com</a>.
           </p>
         </section>
       </div>

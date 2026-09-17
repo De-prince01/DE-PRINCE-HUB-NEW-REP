@@ -291,16 +291,17 @@ function SingleServiceView({ service }: { service: Service }) {
 }
 
 function VerticalServiceCard({ service }: { service: Service }) {
+  const booked = service.bookable !== false;
+  const promo = service.promotional_price != null ? service.promotional_price : null;
+  const effectiveBase = promo != null ? promo : service.base_price;
   const priceText =
     service.price_type === "fixed"
-      ? formatNaira(service.base_price)
+      ? formatNaira(effectiveBase)
       : service.price_type === "range"
         ? `${formatNaira(service.minimum_price || service.base_price)} – ${formatNaira(service.maximum_price || (service.minimum_price || service.base_price))}`
-        : "Quotation";
-  const totalPrice =
-    service.price_type === "fixed"
-      ? service.base_price
-      : service.minimum_price || service.base_price;
+        : service.price_type === "conditional"
+          ? `${formatNaira(service.base_price)}`
+          : "Request a Quote";
 
   return (
     <div className="card-premium flex flex-col gap-5 p-5 sm:flex-row sm:items-center">
@@ -320,10 +321,18 @@ function VerticalServiceCard({ service }: { service: Service }) {
         <p className="text-sm leading-relaxed text-text-muted">
           {service.short_description || service.description || "Professional digital service"}
         </p>
+        {service.price_notice && (
+          <p className="mt-2 text-xs font-medium text-info">{service.price_notice}</p>
+        )}
         <div className="mt-2 flex flex-wrap gap-1.5">
           {service.is_seasonal && service.season_label && (
             <span className="rounded-full bg-warn/15 px-2 py-0.5 text-[10px] font-semibold text-warn">
               {service.season_label}
+            </span>
+          )}
+          {!booked && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 px-2 py-0.5 text-[10px] font-semibold text-rose-400">
+              Service Not Available
             </span>
           )}
           {service.requires_file_upload && (
@@ -350,16 +359,32 @@ function VerticalServiceCard({ service }: { service: Service }) {
       </div>
 
       <div className="flex shrink-0 items-center justify-between gap-4 sm:flex-col sm:items-end">
-        <p className="text-lg font-bold text-gold-bright">
-          {priceText}
-          <span className="ml-1 text-xs font-normal text-text-dim">/{service.price_unit}</span>
-        </p>
-        <Link
-          href={`/use/${service.slug}`}
-          className="btn-gold px-5 py-2 text-sm"
-        >
-          Check Service <ArrowRight className="ml-1 h-4 w-4" />
-        </Link>
+        <div className="text-right">
+          {promo != null && service.base_price > 0 && (
+            <p className="text-xs text-text-dim">
+              <s>{formatNaira(service.base_price)}</s>
+              <span className="ml-1 inline-block rounded bg-success/20 px-1 text-success">Promo</span>
+            </p>
+          )}
+          <p className="text-lg font-bold text-gold-bright">
+            {priceText}
+            {service.price_unit && service.price_unit !== "fixed" && priceText !== "Request a Quote" && (
+              <span className="ml-1 text-xs font-normal text-text-dim">/{service.price_unit}</span>
+            )}
+          </p>
+        </div>
+        {booked ? (
+          <Link
+            href={`/use/${service.slug}`}
+            className="btn-gold px-5 py-2 text-sm"
+          >
+            Check Service <ArrowRight className="ml-1 h-4 w-4" />
+          </Link>
+        ) : (
+          <span className="inline-flex items-center gap-1 rounded-lg border border-rose-500/40 px-5 py-2 text-sm font-semibold text-rose-400">
+            Not Available
+          </span>
+        )}
       </div>
     </div>
   );

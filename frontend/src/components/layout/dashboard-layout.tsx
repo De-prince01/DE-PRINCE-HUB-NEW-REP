@@ -65,7 +65,7 @@ const customerNav: NavItem[] = [
 
 const adminNav: NavItem[] = [
   { href: "/admin", label: "Admin Overview", icon: LayoutDashboard },
-  { href: "/admin/services", label: "Services", icon: Layers },
+  { href: "/admin/services", label: "Services & Pricing", icon: Layers },
   { href: "/admin/appointments", label: "Appointments", icon: CalendarClock },
   { href: "/admin/deliveries", label: "Deliveries", icon: Truck },
   { href: "/admin/quotations", label: "Quotations", icon: FileText },

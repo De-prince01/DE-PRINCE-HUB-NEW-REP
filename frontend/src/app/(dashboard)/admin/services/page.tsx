@@ -41,7 +41,7 @@ import {
 import type { Service, ServiceCategory } from "@/types";
 
 const VERIFICATION_STATUSES = ["not_verified", "verified", "needs_review", "suspended"];
-const PRICE_TYPES = ["fixed", "quote", "range"];
+const PRICE_TYPES = ["fixed", "quote", "range", "conditional"];
 
 const REQUIREMENT_FIELDS: { key: string; label: string }[] = [
   { key: "requires_file_upload", label: "File upload" },
@@ -145,6 +145,11 @@ interface FormState {
   quotation_required: boolean;
   minimum_price: number | null;
   maximum_price: number | null;
+  promotional_price: number | null;
+  processing_fee: number | null;
+  no_record_price: number | null;
+  price_notice: string;
+  bookable: boolean;
   estimated_processing_time: string;
   commission_type: string;
   commission_value: number;
@@ -187,6 +192,11 @@ function emptyForm(categoryId: string): FormState {
     quotation_required: false,
     minimum_price: null,
     maximum_price: null,
+    promotional_price: null,
+    processing_fee: null,
+    no_record_price: null,
+    price_notice: "",
+    bookable: true,
     estimated_processing_time: "",
     commission_type: "percentage",
     commission_value: 20,
@@ -280,6 +290,11 @@ export default function AdminServicesPage() {
       quotation_required: svc.quotation_required,
       minimum_price: svc.minimum_price ?? null,
       maximum_price: svc.maximum_price ?? null,
+      promotional_price: svc.promotional_price ?? null,
+      processing_fee: svc.processing_fee ?? null,
+      no_record_price: svc.no_record_price ?? null,
+      price_notice: svc.price_notice || "",
+      bookable: svc.bookable !== false,
       estimated_processing_time: svc.estimated_processing_time || svc.estimated_duration || "",
       commission_type: svc.commission_type || "percentage",
       commission_value: svc.commission_value,
@@ -394,8 +409,8 @@ export default function AdminServicesPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Services</h1>
-          <p className="text-muted-foreground">Manage the service catalogue, pricing & requirements</p>
+          <h1 className="text-2xl font-bold">Services & Pricing</h1>
+          <p className="text-muted-foreground">Manage the catalogue, prices, availability, quotes & conditional pricing — no code required</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => setCatOpen(true)}>
@@ -468,6 +483,8 @@ export default function AdminServicesPage() {
                   </p>
                   <div className="mt-3 flex flex-wrap gap-1">
                     <Badge variant="outline">{svc.price_type}</Badge>
+                    {svc.bookable === false && <Badge variant="destructive">Not available</Badge>}
+                    {svc.promotional_price != null && <Badge variant="success">Promo</Badge>}
                     {svc.quotation_required && <Badge variant="info">Quote required</Badge>}
                     {svc.requires_physical_presence && (
                       <Badge variant="warning">
@@ -503,7 +520,14 @@ export default function AdminServicesPage() {
                   </Badge>
                   <div className="mt-4 flex items-center justify-between">
                     <div>
-                      {svc.price_type === "fixed" ? (
+                      {svc.promotional_price != null ? (
+                        <p className="font-bold text-primary">
+                          {formatNaira(svc.promotional_price)}
+                          <span className="ml-1 text-xs font-normal text-muted-foreground line-through">
+                            {formatNaira(svc.base_price)}
+                          </span>
+                        </p>
+                      ) : svc.price_type === "fixed" ? (
                         <p className="font-bold text-primary">
                           {formatNaira(svc.base_price)}
                           <span className="text-xs text-muted-foreground"> / {svc.price_unit}</span>
@@ -512,8 +536,13 @@ export default function AdminServicesPage() {
                         <p className="font-bold text-primary">
                           {formatNaira(svc.minimum_price || 0)}–{formatNaira(svc.maximum_price || 0)}
                         </p>
+                      ) : svc.price_type === "conditional" ? (
+                        <p className="font-bold text-primary">
+                          {formatNaira(svc.base_price)}
+                          <span className="text-xs text-muted-foreground"> / {formatNaira(svc.no_record_price ?? 0)} no-record</span>
+                        </p>
                       ) : (
-                        <p className="font-bold text-primary">Quotation</p>
+                        <p className="font-bold text-primary">Request a Quote</p>
                       )}
                     </div>
                     <div className="flex gap-1">
@@ -596,17 +625,7 @@ export default function AdminServicesPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                {form.price_type === "fixed" ? (
-                  <div>
-                    <Label>Base price</Label>
-                    <Input
-                      type="number"
-                      min={0}
-                      value={form.base_price}
-                      onChange={(e) => set("base_price", parseFloat(e.target.value) || 0)}
-                    />
-                  </div>
-                ) : (
+                {form.price_type === "range" ? (
                   <>
                     <div>
                       <Label>Min price</Label>
@@ -625,19 +644,74 @@ export default function AdminServicesPage() {
                       />
                     </div>
                   </>
+                ) : (
+                  <div>
+                    <Label>{form.price_type === "conditional" ? "Price if record found" : "Base price"}</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={form.base_price}
+                      onChange={(e) => set("base_price", parseFloat(e.target.value) || 0)}
+                    />
+                  </div>
                 )}
-                <Toggle
-                  checked={form.quotation_required}
-                  onChange={(v) => set("quotation_required", v)}
-                  label="Quotation required"
-                />
+                {form.price_type === "conditional" && (
+                  <div>
+                    <Label>Price if no record found</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={form.no_record_price ?? ""}
+                      onChange={(e) => set("no_record_price", e.target.value ? parseFloat(e.target.value) : null)}
+                    />
+                  </div>
+                )}
                 <div>
                   <Label>Unit (optional)</Label>
                   <Input value={form.price_unit} onChange={(e) => set("price_unit", e.target.value)} placeholder="page / project / hr" />
                 </div>
                 <div>
+                  <Label>Promotional price (optional)</Label>
+                  <Input
+                    type="number"
+                    min={0}
+                    value={form.promotional_price ?? ""}
+                    onChange={(e) => set("promotional_price", e.target.value ? parseFloat(e.target.value) : null)}
+                    placeholder="Discounted advertised price"
+                  />
+                </div>
+                <div>
+                  <Label>Processing fee (optional)</Label>
+                  <Input
+                    type="number"
+                    min={0}
+                    value={form.processing_fee ?? ""}
+                    onChange={(e) => set("processing_fee", e.target.value ? parseFloat(e.target.value) : null)}
+                  />
+                </div>
+                <div>
                   <Label>Est. processing time</Label>
                   <Input value={form.estimated_processing_time} onChange={(e) => set("estimated_processing_time", e.target.value)} placeholder="e.g. 2–3 business days" />
+                </div>
+                <div className="sm:col-span-2">
+                  <Label>Price notice (shown to customers)</Label>
+                  <Input
+                    value={form.price_notice}
+                    onChange={(e) => set("price_notice", e.target.value)}
+                    placeholder="e.g. This service costs ₦150 if a record is found, and ₦50 if no record is found."
+                  />
+                </div>
+                <div className="flex flex-wrap items-end gap-4">
+                  <Toggle
+                    checked={form.quotation_required}
+                    onChange={(v) => set("quotation_required", v)}
+                    label="Quotation required"
+                  />
+                  <Toggle
+                    checked={form.bookable}
+                    onChange={(v) => set("bookable", v)}
+                    label="Bookable (accepting orders)"
+                  />
                 </div>
               </div>
             </div>

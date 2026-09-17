@@ -33,7 +33,7 @@ const FEATURES = [
   {
     icon: Zap,
     title: "Same-Day Options Nationwide",
-    body: "Urgent printing, rush design and next-day delivery are available across our Lagos and Abuja branches — just pick the fast lane.",
+    body: "Urgent printing, rush design and next-day delivery are available at our Kashere store and across Gombe State — just pick the fast lane.",
   },
 ];
 

@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     "NIN registration",
     "BVN",
     "CAC business registration",
-    "printing Lagos",
-    "digital hub Nigeria",
+    "printing Gombe",
+    "digital hub Gombe State",
     "web development",
     "graphic design",
   ],
@@ -81,16 +81,14 @@ const WHY_US = [
 ];
 
 const TESTIMONIALS = [
-  { name: "Adebayo O.", role: "JAMB Candidate Parent, Lagos", text: "My son's JAMB registration was handled completely online — I got the profile, pin and confirmation without leaving home." },
-  { name: "Chiamaka N.", role: "Business Owner, Abuja", text: "CAC registration and my business website were both done on DE-PRINCE. One platform truly handles everything digital." },
-  { name: "Tunde A.", role: "Freelance Designer, Ibadan", text: "The binding and colour printing quality is excellent, and the wallet flow makes repeat orders effortless." },
+  { name: "Adebayo O.", role: "JAMB Candidate Parent, Gombe", text: "My son's JAMB registration was handled completely online — I got the profile, pin and confirmation without leaving home." },
+  { name: "Chiamaka N.", role: "Business Owner, Gombe State", text: "CAC registration and my business website were both done on DE-PRINCE. One platform truly handles everything digital." },
+  { name: "Tunde A.", role: "Freelance Designer, Kashere", text: "The binding and colour printing quality is excellent, and the wallet flow makes repeat orders effortless." },
   { name: "Grace E.", role: "NYSC Corps Member", text: "NYSC registration, passport booking assistance and certificate printing — all smooth and on time." },
 ];
 
 const BRANCHES = [
-  { icon: MapPin, name: "Iyana-Ipaja Branch", city: "Lagos", addr: "1 Hub Plaza, Iyana-Ipaja Road", time: "8AM – 8PM" },
-  { icon: MapPin, name: "Agege Branch", city: "Lagos", addr: "Old Lagos-Abeokuta Expressway", time: "8AM – 8PM" },
-  { icon: MapPin, name: "Wuse Branch", city: "Abuja", addr: "Wuse Zone 4, Abuja", time: "9AM – 6PM" },
+  { icon: MapPin, name: "DE-PRINCE DIGITAL HUB", city: "Gombe State", addr: "Federal University of Kashere, Akko LGA", time: "Mon – Sat, 8AM – 8PM" },
 ];
 
 const jsonLd = {
@@ -99,13 +97,14 @@ const jsonLd = {
   name: "DE-PRINCE DIGITAL HUB",
   slogan: "Everything Digital. One Platform.",
   description:
-    "Everything Digital. One Platform. Printing, computer services, web development, graphic design, JAMB/NYSC/CAC/NIN/BVN registrations, document processing and delivery across Nigeria.",
-  telephone: "+2348000000000",
-  email: "hello@deprincehub.com",
+    "Everything Digital. One Platform. Printing, computer services, web development, graphic design, JAMB/NYSC/CAC/NIN/BVN registrations, document processing and delivery at the Federal University of Kashere.",
+  telephone: "+2347011112229",
+  email: "deprince969@gmail.com",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "1 Digital Hub Plaza, Iyana-Ipaja",
-    addressLocality: "Lagos",
+    streetAddress: "Federal University of Kashere",
+    addressLocality: "Akko LGA, Kashere",
+    addressRegion: "Gombe State",
     addressCountry: "NG",
   },
   hasOfferCatalog: null,
@@ -191,7 +190,7 @@ export default async function HomePage() {
             <SectionHeading
               eyebrow="Service Catalogue"
               title="Our Services"
-              subtitle="Fifteen service lanes, one platform. Prices start from as low as ₦50 per page."
+              subtitle="Fifteen service lanes, one platform. Transparent Naira pricing, or request a quote."
               center={false}
             />
             <Link href="/services" className="group inline-flex items-center gap-1 text-sm font-semibold text-gold hover:text-gold-bright">
@@ -208,6 +207,9 @@ export default async function HomePage() {
                 unit={"name" in svc ? svc.price_unit : svc.unit}
                 icon={"name" in svc ? undefined : svc.icon}
                 href={"name" in svc ? `/services/${svc.slug}` : svc.href}
+                priceType={"name" in svc ? svc.price_type : svc.priceType}
+                priceNotice={"name" in svc ? svc.price_notice : undefined}
+                bookable={"name" in svc ? svc.bookable : svc.bookable}
               />
             ))}
             <Link
@@ -338,7 +340,7 @@ export default async function HomePage() {
           <SectionHeading
             eyebrow="Testimonials"
             title="What Our Customers Say"
-            subtitle="Real feedback from customers across Lagos and Abuja."
+            subtitle="Real feedback from customers across Gombe State and beyond."
           />
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {TESTIMONIALS.map((t) => (
@@ -406,7 +408,7 @@ export default async function HomePage() {
             title="Find A Branch Near You"
             subtitle="Walk in at any branch — or do everything online and just pick it up."
           />
-          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          <div className="mt-12 grid gap-4 sm:grid-cols-1">
             {BRANCHES.map((b) => (
               <Link key={b.name} href="/branches" className="card-premium p-6">
                 <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold/15">
@@ -441,21 +443,21 @@ export default async function HomePage() {
 }
 
 const FALLBACK_CARDS = [
-  { icon: BookOpen, title: "Academic & Document Services", desc: "Typing, formatting, data entry and presentations.", price: 500, unit: "page", href: "/services/academic-document-services" },
-  { icon: GraduationCap, title: "JAMB / UTME Registration", desc: "Profile creation, PIN, printing and corrections.", price: 2700, unit: "candidate", href: "/services/jamb-utme-registration" },
-  { icon: Printer, title: "Printing & Binding", desc: "B/W & colour printing, binding, lamination.", price: 100, unit: "copy", href: "/services/printing-binding" },
-  { icon: Fingerprint, title: "NIN Registration", desc: "NIN enrolment, retrieval and printing.", price: 3500, unit: "person", href: "/services/nin-national-id-registration" },
-  { icon: Fingerprint, title: "BVN Registration", desc: "BVN enrolment and linkage support.", price: 2000, unit: "person", href: "/services/bvn-bank-verification-number" },
-  { icon: Building2, title: "CAC Business Registration", desc: "Business name and company registration.", price: 15000, unit: "business", href: "/services/cac-business-registration" },
-  { icon: Palette, title: "Graphic Design", desc: "Logos, flyers and brand identity.", price: 5000, unit: "job", href: "/services/graphic-design-branding" },
-  { icon: Code, title: "Web Development", desc: "Business sites, e-commerce and apps.", price: 50000, unit: "project", href: "/services/web-development" },
-  { icon: Monitor, title: "Computer Services", desc: "Installation, repairs and virus cleanup.", price: 2000, unit: "job", href: "/services/computer-services" },
-  { icon: Globe, title: "Online Services", desc: "Portal applications & renewals.", price: 2000, unit: "application", href: "/services/online-services" },
-  { icon: Landmark, title: "Government Assistance", desc: "Official portal navigation & filings.", price: 5000, unit: "case", href: "/services/government-portal-assistance" },
-  { icon: Plane, title: "Passport Booking", desc: "Passport application and booking help.", price: 10000, unit: "booking", href: "/services/passport-booking-assistance" },
-  { icon: Layers, title: "Lamination & Scanning", desc: "Document protection and digitization.", price: 200, unit: "sheet", href: "/services/lamination-scanning" },
-  { icon: Vote, title: "Voter Registration", desc: "INEC voter registration booking.", price: 3000, unit: "booking", href: "/services/voter-registration-booking" },
-  { icon: Building2, title: "Business Registration Assistance", desc: "Step-by-step CAC & filings support.", price: 5000, unit: "case", href: "/services/business-registration-assistance" },
+  { icon: BookOpen, title: "Academic & Document Services", desc: "Typing, formatting, data entry and presentations.", price: 0, unit: "page", href: "/services/academic-document-services", priceType: "quote", bookable: true },
+  { icon: GraduationCap, title: "JAMB / UTME Registration", desc: "Profile creation, PIN, printing and corrections.", price: 0, unit: "candidate", href: "/services/jamb-utme-registration", priceType: "quote", bookable: true },
+  { icon: Printer, title: "Printing & Binding", desc: "B/W & colour printing, binding, lamination.", price: 0, unit: "copy", href: "/services/printing-binding", priceType: "quote", bookable: true },
+  { icon: Fingerprint, title: "NIN Registration", desc: "NIN enrolment, retrieval and printing.", price: 0, unit: "person", href: "/services/nin-national-id-registration", priceType: "quote", bookable: true },
+  { icon: Fingerprint, title: "BVN Registration", desc: "BVN enrolment and linkage support.", price: 0, unit: "person", href: "/services/bvn-bank-verification-number", priceType: "quote", bookable: true },
+  { icon: Building2, title: "CAC Business Registration", desc: "Business name and company registration.", price: 0, unit: "business", href: "/services/cac-business-registration", priceType: "quote", bookable: true },
+  { icon: Palette, title: "Graphic Design", desc: "Logos, flyers and brand identity.", price: 0, unit: "job", href: "/services/graphic-design-branding", priceType: "quote", bookable: true },
+  { icon: Code, title: "Web Development", desc: "Business sites, e-commerce and apps.", price: 0, unit: "project", href: "/services/web-development", priceType: "quote", bookable: true },
+  { icon: Monitor, title: "Computer Services", desc: "Installation, repairs and virus cleanup.", price: 0, unit: "job", href: "/services/computer-services", priceType: "quote", bookable: true },
+  { icon: Globe, title: "Online Services", desc: "Portal applications & renewals.", price: 0, unit: "application", href: "/services/online-services", priceType: "quote", bookable: true },
+  { icon: Landmark, title: "Government Assistance", desc: "Official portal navigation & filings.", price: 0, unit: "case", href: "/services/government-portal-assistance", priceType: "quote", bookable: true },
+  { icon: Plane, title: "Passport Booking", desc: "Passport application and booking help.", price: 0, unit: "booking", href: "/services/passport-booking-assistance", priceType: "quote", bookable: true },
+  { icon: Layers, title: "Lamination & Scanning", desc: "Document protection and digitization.", price: 0, unit: "sheet", href: "/services/lamination-scanning", priceType: "quote", bookable: true },
+  { icon: Vote, title: "Voter Registration", desc: "INEC voter registration booking.", price: 0, unit: "booking", href: "/services/voter-registration-booking", priceType: "quote", bookable: true },
+  { icon: Building2, title: "Business Registration Assistance", desc: "Step-by-step CAC & filings support.", price: 0, unit: "case", href: "/services/business-registration-assistance", priceType: "quote", bookable: true },
 ] as const;
 
 function ServiceTile({
@@ -465,6 +467,9 @@ function ServiceTile({
   unit,
   icon,
   href,
+  priceType,
+  priceNotice,
+  bookable,
 }: {
   name: string;
   desc: string;
@@ -472,11 +477,23 @@ function ServiceTile({
   unit: string;
   icon?: React.ComponentType<{ className?: string }>;
   href: string;
+  priceType?: string;
+  priceNotice?: string | null;
+  bookable?: boolean;
 }) {
   const Icon = icon ?? BookOpen;
+  const booked = bookable !== false;
+  const showPrice =
+    priceType === "fixed"
+      ? formatNaira(price)
+      : priceType === "range"
+        ? `from ${formatNaira(price)}`
+        : priceType === "conditional"
+          ? formatNaira(price)
+          : null;
   return (
     <Link
-      href={href}
+      href={booked ? href : "/services"}
       className="service-card group flex flex-col p-5"
     >
       <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold/15 transition-colors group-hover:bg-gold group-hover:text-ink">
@@ -484,11 +501,20 @@ function ServiceTile({
       </span>
       <h3 className="mt-4 font-display font-semibold text-white">{toSentenceCase(name)}</h3>
       <p className="mt-1 flex-1 text-sm leading-relaxed text-text-dim line-clamp-2">{desc}</p>
+      {priceNotice && (
+        <p className="mt-2 text-[11px] font-medium leading-snug text-info">{priceNotice}</p>
+      )}
       <div className="mt-4 flex items-center justify-between">
-        <p className="text-sm font-bold text-gold-bright">
-          {formatNaira(price)}
-          <span className="text-xs font-normal text-text-dim"> /{unit}</span>
-        </p>
+        {!booked ? (
+          <p className="text-sm font-bold text-rose-400">Service Not Available</p>
+        ) : (
+          <p className="text-sm font-bold text-gold-bright">
+            {showPrice ?? "Request a Quote"}
+            {showPrice && unit && unit !== "fixed" && (
+              <span className="text-xs font-normal text-text-dim"> /{unit}</span>
+            )}
+          </p>
+        )}
         <span className="text-xs font-semibold text-gold group-hover:underline">
           Check Service <ArrowRight className="ml-0.5 inline h-3.5 w-3.5" />
         </span>

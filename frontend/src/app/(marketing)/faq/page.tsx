@@ -30,8 +30,8 @@ const FAQ_GROUPS = [
   {
     title: "Delivery & Pickup",
     faqs: [
-      { q: "Do you deliver?", a: "Yes. Digital work is delivered to your dashboard/downloads instantly, and physical work (prints, binders, certificates) can be delivered in Lagos and Abuja." },
-      { q: "Can I collect in store?", a: "Absolutely — choose pickup at checkout and collect at any of our branches (Iyana-Ipaja, Agege or Wuse)." },
+      { q: "Do you deliver?", a: "Yes. Digital work is delivered to your dashboard/downloads instantly, and physical work (prints, binders, certificates) can be delivered in Gombe State." },
+      { q: "Can I collect in store?", a: "Absolutely — choose pickup at checkout and collect at DE-PRINCE DIGITAL HUB, Federal University of Kashere, Akko LGA, Gombe State." },
       { q: "How do I track my order?", a: "Use /track with your receipt/order number, or sign in and open the order in your dashboard for live status, files and messages." },
     ],
   },

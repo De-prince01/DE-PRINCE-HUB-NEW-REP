@@ -92,7 +92,7 @@ export default function SiteFooter() {
               <X className="h-4 w-4" />
             </a>
             <a
-              href="https://wa.me/2348000000000"
+              href="https://wa.me/2347011112229"
               target="_blank"
               rel="noreferrer"
               className="rounded-lg border border-gold/25 p-2 text-text-muted transition-colors hover:bg-gold/10 hover:text-gold-bright"
@@ -132,18 +132,24 @@ export default function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-text-muted">
             <li className="flex items-start gap-3">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-              <span>Main Branch: 1 Digital Hub Plaza, Iyana-Ipaja, Lagos, Nigeria</span>
+              <span>DE-PRINCE DIGITAL HUB, Federal University of Kashere, Akko LGA, Gombe State, Nigeria</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0 text-gold" />
-              <a href="tel:+2348000000000" className="hover:text-gold-bright">
-                +234 800 000 0000
+              <a href="tel:+2347011112229" className="hover:text-gold-bright">
+                0701 111 2229
+              </a>
+            </li>
+            <li className="flex items-center gap-3">
+              <Phone className="h-4 w-4 shrink-0 text-gold" />
+              <a href="tel:+2348100200730" className="hover:text-gold-bright">
+                0810 020 0730
               </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-4 w-4 shrink-0 text-gold" />
-              <a href="mailto:hello@deprincehub.com" className="hover:text-gold-bright">
-                hello@deprincehub.com
+              <a href="mailto:deprince969@gmail.com" className="hover:text-gold-bright">
+                deprince969@gmail.com
               </a>
             </li>
             <li className="flex items-start gap-3">

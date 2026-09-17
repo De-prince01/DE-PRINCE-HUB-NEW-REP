@@ -27,7 +27,7 @@ export default function FloatingHelpers() {
         <ArrowUp className="h-5 w-5" />
       </button>
       <a
-        href="https://wa.me/2348000000000?text=Hello%20DE-PRINCE%20DIGITAL%20HUB"
+        href="https://wa.me/2347011112229?text=Hello%20DE-PRINCE%20DIGITAL%20HUB"
         target="_blank"
         rel="noreferrer"
         aria-label="Chat on WhatsApp"

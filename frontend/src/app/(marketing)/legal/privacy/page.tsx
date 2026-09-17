@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage() {
         <section>
           <h2 className="font-display text-lg font-semibold text-white">7. Contact</h2>
           <p className="mt-2">
-            Privacy questions: <a href="mailto:privacy@deprincehub.com" className="text-gold hover:text-gold-bright">privacy@deprincehub.com</a>.
+            Privacy questions: <a href="mailto:deprince969@gmail.com" className="text-gold hover:text-gold-bright">deprince969@gmail.com</a>.
           </p>
         </section>
       </div>
