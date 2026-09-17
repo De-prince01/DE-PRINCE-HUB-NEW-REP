@@ -44,6 +44,22 @@ class PaymentStatus(str, enum.Enum):
     REFUNDED = "refunded"
 
 
+class NotificationType(str, enum.Enum):
+    ORDER_RECEIVED = "order_received"
+    PAYMENT_CONFIRMED = "payment_confirmed"
+    WORKER_ASSIGNED = "worker_assigned"
+    WORK_STARTED = "work_started"
+    REVISION_REQUESTED = "revision_requested"
+    WORK_COMPLETED = "work_completed"
+    FILE_READY = "file_ready"
+    READY_FOR_PICKUP = "ready_for_pickup"
+    DELIVERY_STARTED = "delivery_started"
+    ORDER_DELIVERED = "order_delivered"
+    WALLET_CREDIT = "wallet_credit"
+    WALLET_DEBIT = "wallet_debit"
+    SYSTEM = "system"
+
+
 class PaymentMethod(str, enum.Enum):
     CASH = "cash"
     TRANSFER = "transfer"

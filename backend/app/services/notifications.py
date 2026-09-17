@@ -5,6 +5,7 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.notification import Notification
+from app.models.enums import NotificationType
 
 
 async def create_notification(
@@ -19,7 +20,7 @@ async def create_notification(
         user_id=user_id,
         title=title,
         message=message,
-        type=type,
+        type=NotificationType(type),
         data=data or {},
     )
     db.add(notification)

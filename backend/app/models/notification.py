@@ -10,7 +10,7 @@ from sqlalchemy import Uuid, JSON
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.enums import PaymentMethod
+from app.models.enums import PaymentMethod, NotificationType
 
 
 class Notification(Base):
@@ -18,7 +18,7 @@ class Notification(Base):
 
     id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(Uuid(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    type = Column(String(50), default="system", nullable=False)
+    type = Column(SAEnum(NotificationType, name="notification_type", values_callable=lambda c: [e.value for e in c]), default=NotificationType.SYSTEM, nullable=False)
     title = Column(String(300), nullable=False)
     message = Column(Text, nullable=False)
     data = Column(JSON, default=dict)
