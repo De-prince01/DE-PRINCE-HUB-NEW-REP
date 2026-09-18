@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { API_URL, formatNaira } from "@/lib/utils";
 import { toSentenceCase } from "@/lib/sentence";
+import { resolveServiceIcon } from "@/lib/service-icons";
 import { fetchServiceBySlug } from "@/lib/catalogue";
 import SectionHeading from "@/components/marketing/section-heading";
 import type { Service, ServiceCategory } from "@/types";
@@ -291,6 +292,11 @@ function SingleServiceView({ service }: { service: Service }) {
 }
 
 function VerticalServiceCard({ service }: { service: Service }) {
+  const Icon = resolveServiceIcon({
+    slug: service.slug,
+    icon: service.icon,
+    categoryName: service.category_name,
+  });
   const booked = service.bookable !== false;
   const promo = service.promotional_price != null ? service.promotional_price : null;
   const effectiveBase = promo != null ? promo : service.base_price;
@@ -307,7 +313,7 @@ function VerticalServiceCard({ service }: { service: Service }) {
     <div className="card-premium flex flex-col gap-5 p-5 sm:flex-row sm:items-center">
       <div className="flex shrink-0 items-center gap-4 sm:w-72">
         <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/15">
-          <BookOpen className="h-6 w-6 text-gold-bright" />
+          <Icon className="h-6 w-6 text-gold-bright" />
         </span>
         <div>
           <h3 className="font-display font-semibold text-white">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { api, apiForm } from "@/lib/api";
 import { formatNaira } from "@/lib/utils";
+import { resolveServiceIcon } from "@/lib/service-icons";
 import { showToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,44 +24,6 @@ import {
   Search,
   UploadCloud,
   X,
-  FileText,
-  PenLine,
-  BookOpen,
-  Printer,
-  Palette,
-  CreditCard,
-  Building2,
-  Globe,
-  HardDrive,
-  Table2,
-  Server,
-  ShoppingCart,
-  Image,
-  Landmark,
-  Briefcase,
-  Layers,
-  Layout,
-  Sparkles,
-  Wifi,
-  Camera,
-  Copy,
-  GraduationCap,
-  Share2,
-  Download,
-  Cpu,
-  List,
-  Shield,
-  Code,
-  Settings,
-  Monitor,
-  UserRound,
-  FilePenLine,
-  FileSearch,
-  Fingerprint,
-  Vote,
-  Stamp,
-  Plane,
-  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 import type { ServiceCategory, Service, Order } from "@/types";
@@ -87,63 +50,6 @@ const CATEGORY_MAP: Record<string, string> = {
   "jamb services": "jamb",
   "government & identity": "government",
 };
-
-const SERVICE_ICONS: Record<string, LucideIcon> = {
-  "APA/Formatting":                  FileText,
-  "Assignment Typing":               PenLine,
-  "Binder (Spiral/Soft/Hard)":       BookOpen,
-  "Black & White Printing":          Printer,
-  "Colour Printing":                 Printer,
-  "Lamination":                      Layers,
-  "Photocopying":                    Copy,
-  "Scanning":                        FileText,
-  "Brand Identity":                  Palette,
-  "Business Card":                   CreditCard,
-  "Flyer Design":                    Image,
-  "Logo Design":                     Sparkles,
-  "Social Media Graphics":           Share2,
-  "Passport Photography":            Camera,
-  "Business Website":                Globe,
-  "E-commerce Website":              ShoppingCart,
-  "Landing Page":                    Layout,
-  "Web Application":                 Code,
-  "Website Maintenance":             Settings,
-  "Domain & Hosting Setup":          Server,
-  "Data Backup":                     HardDrive,
-  "Network Configuration":           Wifi,
-  "Software Installation":           Download,
-  "System Optimization":             Cpu,
-  "Virus/Malware Cleanup":           Shield,
-  "Windows Installation":            Monitor,
-  "Business Registration Assistance": Building2,
-  "Government Portal Assistance":    Landmark,
-  "Job Application Assistance":      Briefcase,
-  "School Application Assistance":   GraduationCap,
-  "Data Entry":                      Table2,
-  "Project Typing":                  PenLine,
-  "Table of Contents":               List,
-  "PowerPoint Presentation":         FileText,
-  "JAMB/UTME Registration":          GraduationCap,
-  "JAMB Profile Creation":           UserRound,
-  "JAMB ePIN & Document Printing":   Printer,
-  "JAMB Correction of Data":         FilePenLine,
-  "JAMB CBT Practice":               Cpu,
-  "Post-UTME Registration":          GraduationCap,
-  "NIN (National ID) Registration":  Fingerprint,
-  "NIN Retrieval / Print":           FileSearch,
-  "BVN (Bank Verification Number)":  Fingerprint,
-  "CAC Business Registration":       Building2,
-  "CAC Business Search":             Search,
-  "Voter Registration Booking":      Vote,
-  "Verification Centre":             ShieldCheck,
-  "NYSC Registration Assistance":    GraduationCap,
-  "Document Attestation":            Stamp,
-  "Passport Booking Assistance":     Plane,
-};
-
-function getServiceIcon(name: string) {
-  return SERVICE_ICONS[name] || FileText;
-}
 
 function getCategoryColor(catName: string): { bg: string; icon: string } {
   const key = CATEGORY_MAP[catName?.toLowerCase()] || "fallback";
@@ -340,21 +246,33 @@ export default function ServicesPage() {
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {catServices.map((service) => {
+                  const ServiceIcon = resolveServiceIcon({
+                    slug: service.slug,
+                    icon: service.icon,
+                    categoryName: service.category_name,
+                  });
+                  const booked = service.bookable !== false;
+                  const promo = service.promotional_price != null ? service.promotional_price : null;
+                  const effectiveBase = promo != null ? promo : service.base_price;
+                  const svcPriceText =
+                    service.price_type === "fixed"
+                      ? formatNaira(effectiveBase)
+                      : service.price_type === "range"
+                        ? `from ${formatNaira(service.minimum_price || effectiveBase)}`
+                        : service.price_type === "conditional"
+                          ? formatNaira(service.base_price)
+                          : "Request a Quote";
                   return (
                     <Link
                       key={service.id}
-                      href={`/use/${service.slug}`}
+                      href={booked ? `/use/${service.slug}` : "/use"}
                     >
                       <div className="service-card group">
                         <div
                           className={`service-card-header bg-gradient-to-br ${colors.bg}`}
                         >
                           <div className="service-card-icon">
-                            <img
-                              src="/images/service-default-icon.png"
-                              alt={service.name}
-                              className="h-10 w-10 object-contain rounded-full"
-                            />
+                            <ServiceIcon className="h-7 w-7 text-[#181818]" />
                           </div>
                         </div>
                         <div className="service-card-body">
@@ -366,15 +284,22 @@ export default function ServicesPage() {
                           </p>
                           <div className="flex items-center justify-between pt-1">
                             <p className="text-sm font-bold text-[#a87c1e]">
-                              {formatNaira(service.base_price)}
-                              <span className="text-xs font-normal text-muted-foreground ml-0.5">
-                                /{service.price_unit}
-                              </span>
+                              {booked ? svcPriceText : <span className="text-[#dc2626]">Not Available</span>}
+                              {booked && service.price_type === "fixed" && service.price_unit && (
+                                <span className="text-xs font-normal text-muted-foreground ml-0.5">
+                                  /{service.price_unit}
+                                </span>
+                              )}
                             </p>
                             <span className="text-xs font-medium text-[#d4a84b] group-hover:underline">
-                              View &rarr;
+                              {booked ? "View" : "Not Available"} &rarr;
                             </span>
                           </div>
+                          {!booked && (
+                            <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
+                              Service Not Available
+                            </Badge>
+                          )}
                           <div className="flex flex-wrap gap-1 pt-1">
                             {service.is_seasonal && (
                               <Badge variant="warning" className="text-[10px] px-1.5 py-0">

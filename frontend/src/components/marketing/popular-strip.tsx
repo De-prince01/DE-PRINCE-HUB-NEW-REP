@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Flame, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { api } from "@/lib/api";
 import { formatNaira } from "@/lib/utils";
+import { resolveServiceIcon } from "@/lib/service-icons";
 import type { Service } from "@/types";
 
 const POPULAR_NAMES = [
@@ -38,6 +39,11 @@ export default function PopularStrip() {
     <div className="flow-root">
       <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {services.map((s) => {
+          const Icon = resolveServiceIcon({
+            slug: s.slug,
+            icon: s.icon,
+            categoryName: s.category_name,
+          });
           const booked = s.bookable !== false;
           const promo = s.promotional_price != null ? s.promotional_price : null;
           const effectiveBase = promo != null ? promo : s.base_price;
@@ -57,7 +63,7 @@ export default function PopularStrip() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="rounded-lg bg-gold/15 p-2">
-                  <Flame className="h-4 w-4 text-gold-bright" />
+                  <Icon className="h-4 w-4 text-gold-bright" />
                 </div>
                 {!booked ? (
                   <span className="rounded-full bg-rose-500/15 px-2 py-0.5 text-[10px] font-semibold text-rose-400">

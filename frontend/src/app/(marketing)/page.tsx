@@ -29,6 +29,7 @@ import {
 import { fetchCatalogue } from "@/lib/catalogue";
 import { toSentenceCase } from "@/lib/sentence";
 import { formatNaira } from "@/lib/utils";
+import { resolveServiceIcon } from "@/lib/service-icons";
 import TrustStrip from "@/components/marketing/trust-strip";
 import SectionHeading from "@/components/marketing/section-heading";
 import FeatureAccordion from "@/components/marketing/feature-accordion";
@@ -207,6 +208,7 @@ export default async function HomePage() {
                 unit={"name" in svc ? svc.price_unit : svc.unit}
                 icon={"name" in svc ? undefined : svc.icon}
                 href={"name" in svc ? `/services/${svc.slug}` : svc.href}
+                slug={"name" in svc ? svc.slug : undefined}
                 priceType={"name" in svc ? svc.price_type : svc.priceType}
                 priceNotice={"name" in svc ? svc.price_notice : undefined}
                 bookable={"name" in svc ? svc.bookable : svc.bookable}
@@ -467,6 +469,7 @@ function ServiceTile({
   unit,
   icon,
   href,
+  slug,
   priceType,
   priceNotice,
   bookable,
@@ -477,11 +480,12 @@ function ServiceTile({
   unit: string;
   icon?: React.ComponentType<{ className?: string }>;
   href: string;
+  slug?: string;
   priceType?: string;
   priceNotice?: string | null;
   bookable?: boolean;
 }) {
-  const Icon = icon ?? BookOpen;
+  const Icon = icon ?? resolveServiceIcon({ slug });
   const booked = bookable !== false;
   const showPrice =
     priceType === "fixed"
