@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="340" viewBox="0 0 420 340" role="img" aria-label="DE-PRINCE welcome assistant">
+  <defs>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E8C879"/>
+      <stop offset="1" stop-color="#D4A84B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- soft glow -->
+  <circle cx="150" cy="225" r="140" fill="#E8C879" opacity="0.08"/>
+
+  <!-- speech bubble -->
+  <polygon points="198,96 172,142 218,114" fill="#FFFFFF"/>
+  <rect x="196" y="28" width="208" height="96" rx="22" fill="#FFFFFF" stroke="#D4A84B" stroke-width="3"/>
+  <text x="300" y="66" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700" fill="#1F2937">Welcome!</text>
+  <text x="300" y="98" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" fill="#4B5563">How can we help you today?</text>
+
+  <!-- backdrop disc -->
+  <circle cx="150" cy="225" r="118" fill="#241C12"/>
+  <circle cx="150" cy="225" r="108" fill="none" stroke="url(#goldGrad)" stroke-width="4"/>
+
+  <!-- hair back -->
+  <circle cx="150" cy="175" r="58" fill="#3E2B1E"/>
+
+  <!-- shoulders -->
+  <path d="M62,326 C69,262 104,238 150,238 C196,238 231,262 238,326 Z" fill="#0E9488"/>
+  <path d="M150,238 C180,238 212,262 236,326" stroke="#0B7A6E" stroke-width="2" fill="none"/>
+
+  <!-- neck -->
+  <rect x="137" y="206" width="26" height="34" rx="9" fill="#E8B27B"/>
+
+  <!-- face -->
+  <circle cx="150" cy="178" r="50" fill="#F4C28B"/>
+
+  <!-- earrings -->
+  <circle cx="100" cy="186" r="4" fill="url(#goldGrad)"/>
+  <circle cx="200" cy="186" r="4" fill="url(#goldGrad)"/>
+
+  <!-- hair fringe -->
+  <path d="M100,176 C94,128 120,102 150,102 C180,102 206,128 200,176 C202,126 178,110 150,110 C122,110 98,126 100,176 Z" fill="#3E2B1E"/>
+
+  <!-- headband -->
+  <path d="M104,166 Q150,148 196,166 L196,174 Q150,158 104,174 Z" fill="#E8C879"/>
+
+  <!-- brows -->
+  <path d="M124,165 Q134,160 143,166" stroke="#3E2B1E" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M157,166 Q166,160 176,165" stroke="#3E2B1E" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- eyes -->
+  <circle cx="134" cy="179" r="4.5" fill="#2A1E12"/>
+  <circle cx="166" cy="179" r="4.5" fill="#2A1E12"/>
+
+  <!-- blush -->
+  <circle cx="127" cy="198" r="7" fill="#F08A66" opacity="0.4"/>
+  <circle cx="173" cy="198" r="7" fill="#F08A66" opacity="0.4"/>
+
+  <!-- smile -->
+  <path d="M133,197 Q150,214 167,197" stroke="#8B5A2B" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+
+  <!-- sparkles -->
+  <path d="M46,70 l4,10 10,4 -10,4 -4,10 -4,-10 -10,-4 10,-4 Z" fill="url(#goldGrad)"/>
+  <path d="M372,200 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z" fill="url(#goldGrad)" opacity="0.85"/>
+  <circle cx="340" cy="120" r="5" fill="#D4A84B" opacity="0.5"/>
+  <circle cx="80" cy="300" r="4" fill="#E8C879" opacity="0.5"/>
+</svg>

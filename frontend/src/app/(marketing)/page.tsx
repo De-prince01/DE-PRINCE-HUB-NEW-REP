@@ -149,6 +149,15 @@ export default async function HomePage() {
             computers and delivery — start from your phone, continue online,
             finish in store.
           </p>
+          <div className="mt-8 flex justify-center">
+            <img
+              src="/images/assistant-welcome.svg"
+              alt="DE-PRINCE welcome assistant welcoming you to the hub"
+              width={420}
+              height={340}
+              className="w-64 drop-shadow-[0_10px_30px_rgba(212,168,75,0.25)] sm:w-80"
+            />
+          </div>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link href="/services" className="btn-gold px-7 py-3 text-base">
               Explore Services <ArrowRight className="ml-2 h-4 w-4" />
