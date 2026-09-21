@@ -73,11 +73,13 @@ export default function LoginPage() {
               </Label>
               <Input
                 id="identifier"
-                type="email"
+                type="text"
+                inputMode="email"
+                pattern=".{3,255}"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="you@example.com"
-                autoComplete="email"
+                placeholder="you@example.com or 0810 020 0730"
+                autoComplete="username"
                 required
               />
             </div>

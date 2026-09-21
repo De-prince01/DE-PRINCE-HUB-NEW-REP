@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
@@ -58,7 +58,12 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
 
 @router.post("/login", response_model=TokenOut)
 async def login(data: LoginRequest, db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(User).where(User.email == data.email))
+    identifier = data.email.strip()
+    result = await db.execute(
+        select(User).where(
+            or_(User.email == identifier, User.phone == identifier)
+        )
+    )
     user = result.scalar_one_or_none()
     if not user or not verify_password(data.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid credentials")

@@ -30,7 +30,8 @@ class UserOut(UserBase):
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    """Login with email OR phone number (field kept as `email` for FE/API compat)."""
+    email: str = Field(..., min_length=3, max_length=255)
     password: str
 
 

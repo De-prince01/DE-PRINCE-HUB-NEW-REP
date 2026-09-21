@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
+import NotificationsBell from "@/components/layout/notifications-bell";
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -169,9 +170,7 @@ export default function DashboardLayout({
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-3">
-            <Link href="/notifications" className="relative p-2 rounded-full hover:bg-[#222]">
-              <Bell className="h-5 w-5" />
-            </Link>
+            <NotificationsBell />
             <div className="hidden sm:block text-right">
               <p className="text-sm font-medium text-white">
                 {user?.first_name} {user?.last_name}

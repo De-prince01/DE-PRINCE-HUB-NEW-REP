@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
@@ -32,7 +32,7 @@ export default function AdminComputersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Cyber CafÃ©</h1>
+        <h1 className="text-2xl font-bold">Cyber Café</h1>
         <p className="text-muted-foreground">Manage computer stations</p>
       </div>
 
@@ -49,7 +49,7 @@ export default function AdminComputersPage() {
                     {c.status.replace("_", " ")}
                   </Badge>
                 </div>
-                <p className="mt-1 text-sm text-muted-foreground">Rate: â‚¦{c.price_per_hour}/hr</p>
+                <p className="mt-1 text-sm text-muted-foreground">Rate: ₦{c.price_per_hour}/hr</p>
                 <div className="mt-3 flex gap-2">
                   <Button size="sm" onClick={() => toggle(c.id, "available")} variant="outline">Available</Button>
                   <Button size="sm" onClick={() => toggle(c.id, "in_use")} variant="outline">In Use</Button>
