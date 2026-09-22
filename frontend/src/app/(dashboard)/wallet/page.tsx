@@ -212,19 +212,31 @@ export default function WalletPage() {
             <CardTitle>Fund Wallet</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <Label>Amount (₦)</Label>
-              <Input
-                type="number"
-                min="1"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="e.g. 5000"
-              />
+            <div className="rounded-lg border border-[#D4A84B]/25 bg-[#111111] p-4">
+              <p className="text-sm font-semibold text-[#E8C879]">Transfer to fund your wallet</p>
+              <p className="mt-2 text-sm leading-relaxed text-[#A8A8A8]">
+                Send to the account below, then click <span className="font-medium text-white">"I have paid"</span> and
+                upload your Moniepoint receipt proof. Staff confirms before your wallet is credited.
+              </p>
+              <div className="mt-3 space-y-1 rounded-md bg-[#0B0B0B] p-3">
+                <p className="text-xs tracking-wide text-[#A8A8A8]">MONIEPOINT (De-PRINCE DIGITAL HUB receiving account)</p>
+                <p className="text-sm font-bold tracking-wider text-white">8100200730</p>
+                <p className="text-sm font-medium text-[#E8C879]">railwan abdul</p>
+              </div>
+              <div className="mt-2">
+                <Label htmlFor="amount">Amount (₦)</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="e.g. 5000"
+                />
+              </div>
+              <Button onClick={fundWallet} disabled={funding} className="w-full">
+                {funding ? "Processing..." : "Fund Wallet"}
+              </Button>
             </div>
-            <Button onClick={fundWallet} disabled={funding} className="w-full">
-              {funding ? "Processing..." : "Fund Wallet"}
-            </Button>
           </CardContent>
         </Card>
 
