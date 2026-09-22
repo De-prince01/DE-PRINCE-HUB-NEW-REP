@@ -23,6 +23,7 @@ import { resolveServiceIcon } from "@/lib/service-icons";
 import { fetchServiceBySlug } from "@/lib/catalogue";
 import SectionHeading from "@/components/marketing/section-heading";
 import type { Service, ServiceCategory } from "@/types";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
